@@ -1,0 +1,29 @@
+# Virtual environment
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Raw scraped data
+data/raw/situation_reports/*.pdf
+data/raw/weather_reports/*.pdf
+data/raw/river_reports/*.pdf
+
+# Temporary / failed download files
+data/raw/**/failed_downloads.csv
+
+# Model files
+*.pkl
+*.joblib
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.vscode/
