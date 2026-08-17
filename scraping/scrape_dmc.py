@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-
+import hashlib
 
 # =========================================================
 # PROJECT PATHS
@@ -547,13 +547,16 @@ def download_pdfs(
         ):
             time_text = "unknown"
 
+        url_hash = hashlib.sha1(
+            str(row["pdf_url"]).encode("utf-8")).hexdigest()[:8]
+
 
         filename = (
             f"situation_"
             f"{date_text}_"
-            f"{time_text}.pdf"
+            f"{time_text}_"
+            f"{url_hash}.pdf"
         )
-
 
         file_path = (
             OUTPUT_DIR
