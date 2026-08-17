@@ -15,6 +15,7 @@ __pycache__/
 data/raw/situation_reports/*.pdf
 data/raw/weather_reports/*.pdf
 data/raw/river_reports/*.pdf
+data/raw/landslide_reports/*.pdf
 
 # Temporary / failed download files
 data/raw/**/failed_downloads.csv
