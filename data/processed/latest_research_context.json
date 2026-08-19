@@ -1,0 +1,45 @@
+{
+    "snapshot_datetime": "2026-08-14 10:00:00",
+    "hazard_context": {
+        "flood_context_score": 50.0,
+        "weather_context_score": 50.0,
+        "landslide_context_score": 50.0,
+        "combined_hazard_context_score": 50.0
+    },
+    "trend": {
+        "trend": "Increasing",
+        "change_from_previous": 16.0,
+        "rapid_growth_score": 5.769230769230769,
+        "monitoring_status": "Normal Increase"
+    },
+    "DRPI": {
+        "score": 39.647210712784485,
+        "band": "Moderate",
+        "components": {
+            "Current Human Impact": 75.72209211553474,
+            "Predicted Impact Growth": 0.0,
+            "Predicted Safety Demand": 66.7447306791569,
+            "Hazard Context": 50.0,
+            "Rapid Growth": 5.769230769230769
+        },
+        "note": "Research-derived FloodImpact-LK priority indicator; not an official warning."
+    },
+    "SCPI": {
+        "score": 55.99742521389678,
+        "band": "High",
+        "components": {
+            "Current Safety Population": 67.13505074160811,
+            "Forecast Safety Population": 66.7447306791569,
+            "Safety-Use Probability": 96.10734464871888,
+            "Predicted Safety Growth": 0.0,
+            "Hazard Context": 50.0
+        },
+        "note": "Research-derived relative safety-demand pressure indicator. It does not represent actual safety-centre capacity utilization."
+    },
+    "freshness": {
+        "river_age_hours": 21.5,
+        "river_status": "Current",
+        "landslide_age_hours": 120.5,
+        "landslide_status": "Stale"
+    }
+}
