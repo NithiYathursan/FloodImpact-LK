@@ -1,0 +1,83 @@
+{
+    "project": "FloodImpact-LK",
+    "forecast_definition": "Next eligible DMC Situation Report within a maximum 48-hour gap",
+    "feature_set": [
+        "weather_reports_24h",
+        "weather_max_rainfall_threshold_24h",
+        "weather_max_wind_24h",
+        "weather_max_warning_level_24h",
+        "weather_heavy_rain_24h",
+        "weather_thunderstorm_24h",
+        "weather_strong_wind_24h",
+        "weather_low_pressure_24h",
+        "weather_depression_24h",
+        "weather_cyclone_24h",
+        "latest_weather_age_hours",
+        "landslide_active_warning",
+        "landslide_max_warning_level",
+        "landslide_level1_districts",
+        "landslide_level2_districts",
+        "landslide_level3_districts",
+        "landslide_districts_at_risk",
+        "latest_landslide_age_hours",
+        "current_flood_flag",
+        "current_landslide_flag",
+        "current_heavy_rain_flag",
+        "report_hour",
+        "report_dayofweek",
+        "month_sin",
+        "month_cos",
+        "dayofyear_sin",
+        "dayofyear_cos",
+        "affected_people",
+        "affected_families",
+        "safety_centres",
+        "people_in_safety_centres",
+        "log_current_affected_people",
+        "log_current_affected_families",
+        "log_current_safety_centres",
+        "log_current_people_in_safety_centres",
+        "previous_context_valid",
+        "previous_report_gap_hours",
+        "prev_affected_people",
+        "prev_affected_families",
+        "prev_safety_centres",
+        "prev_people_in_safety_centres",
+        "affected_people_change_from_prev",
+        "affected_families_change_from_prev",
+        "safety_population_change_from_prev",
+        "affected_people_log_change_from_prev",
+        "safety_population_log_change_from_prev"
+    ],
+    "feature_count": 46,
+    "development_rows": 1131,
+    "development_start": "2023-01-02 06:00:00",
+    "development_end": "2025-12-16 06:00:00",
+    "test_rows": 150,
+    "human_impact": {
+        "model": "GradientBoostingRegressor",
+        "loss": "huber",
+        "prediction_target": "signed_log1p(next-current affected people)",
+        "deployment_output": "current + inverse transformed predicted change"
+    },
+    "safety_usage": {
+        "model": "RandomForestClassifier",
+        "threshold": 0.5
+    },
+    "safety_demand": {
+        "model": "GradientBoostingRegressor",
+        "loss": "huber",
+        "stage": "positive-demand amount model",
+        "prediction_target": "signed_log1p(next-current safety-centre population)"
+    },
+    "risk": {
+        "model": "HistGradientBoostingClassifier",
+        "classes": [
+            "Low",
+            "Moderate",
+            "High",
+            "Critical"
+        ],
+        "status": "Experimental research-derived indicator; not an official warning"
+    }
+}

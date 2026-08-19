@@ -28,3 +28,5 @@ data/raw/**/failed_downloads.csv
 .DS_Store
 Thumbs.db
 .vscode/
+
+Add-Content .gitignore "`n# Keep final FloodImpact-LK trained models`n!models/*.joblib"

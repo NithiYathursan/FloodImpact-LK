@@ -1,0 +1,333 @@
+{
+    "project": {
+        "name": "FloodImpact-LK",
+        "title": "A Multi-Source Spatio-Temporal Early Warning System for Forecasting Human Impact, Displacement and Safety-Centre Demand During Floods and Rainfall-Induced Landslides in Sri Lanka",
+        "system_type": "Official-report-driven near-real-time decision-support research prototype",
+        "geographic_scope": "Sri Lanka",
+        "forecast_scope": "National",
+        "supported_hazards": [
+            "Flood",
+            "Rainfall-Induced Landslide"
+        ]
+    },
+    "current_snapshot": {
+        "snapshot_datetime": "2026-08-14 10:00:00",
+        "forecast_definition": "Next eligible DMC Situation Report within a maximum 48-hour gap",
+        "geographic_scope": "Sri Lanka - national",
+        "reported_hazards": "Flood, Landslide, Heavy Rain, Strong Wind",
+        "current_affected_people": 16536.0,
+        "predicted_next_affected_people": 16535.577753781483,
+        "predicted_affected_change": -0.42224621851810135,
+        "prediction_lower_90": 7224.096841908622,
+        "prediction_upper_90": 17781.324498142618,
+        "prediction_interval_label": "90% model-based prediction interval",
+        "current_safety_population": 188.0,
+        "safety_use_probability": 0.9610734464871888,
+        "safety_use_prediction": 1,
+        "predicted_next_safety_population": 185.63480990286916,
+        "experimental_escalation_risk": "Moderate",
+        "risk_probabilities": {
+            "Critical": 0.0032049017749481226,
+            "High": 0.04103838076890574,
+            "Low": 0.2826597277672548,
+            "Moderate": 0.6730969896888913
+        },
+        "hazard_flags": {
+            "flood": 1,
+            "landslide": 1,
+            "heavy_rain": 1
+        },
+        "important_note": "Human-impact and safety-demand forecasts are national multi-hazard forecasts. They must not be interpreted as Flood-only, Landslide-only, or district-level forecasts."
+    },
+    "research_context": {
+        "snapshot_datetime": "2026-08-14 10:00:00",
+        "hazard_context": {
+            "flood_context_score": 50.0,
+            "weather_context_score": 50.0,
+            "landslide_context_score": 50.0,
+            "combined_hazard_context_score": 50.0
+        },
+        "trend": {
+            "trend": "Increasing",
+            "change_from_previous": 16.0,
+            "rapid_growth_score": 5.769230769230769,
+            "monitoring_status": "Normal Increase"
+        },
+        "DRPI": {
+            "score": 39.647210712784485,
+            "band": "Moderate",
+            "components": {
+                "Current Human Impact": 75.72209211553474,
+                "Predicted Impact Growth": 0.0,
+                "Predicted Safety Demand": 66.7447306791569,
+                "Hazard Context": 50.0,
+                "Rapid Growth": 5.769230769230769
+            },
+            "note": "Research-derived FloodImpact-LK priority indicator; not an official warning."
+        },
+        "SCPI": {
+            "score": 55.99742521389678,
+            "band": "High",
+            "components": {
+                "Current Safety Population": 67.13505074160811,
+                "Forecast Safety Population": 66.7447306791569,
+                "Safety-Use Probability": 96.10734464871888,
+                "Predicted Safety Growth": 0.0,
+                "Hazard Context": 50.0
+            },
+            "note": "Research-derived relative safety-demand pressure indicator. It does not represent actual safety-centre capacity utilization."
+        },
+        "freshness": {
+            "river_age_hours": 21.5,
+            "river_status": "Current",
+            "landslide_age_hours": 120.5,
+            "landslide_status": "Stale"
+        }
+    },
+    "similar_events": {
+        "query_datetime": "2026-08-13 10:00:00",
+        "events": [
+            {
+                "historical_datetime": "2024-01-18 09:00:00",
+                "similarity_score": 0.3743036476820632,
+                "affected_people": 4244.0,
+                "safety_population": 1309.0,
+                "next_affected_people": 2202.0,
+                "next_safety_population": 1228.0,
+                "escalation_risk": "Low"
+            },
+            {
+                "historical_datetime": "2023-12-22 09:00:00",
+                "similarity_score": 0.3677434351820736,
+                "affected_people": 30377.0,
+                "safety_population": 783.0,
+                "next_affected_people": 29805.0,
+                "next_safety_population": 737.0,
+                "escalation_risk": "Low"
+            },
+            {
+                "historical_datetime": "2024-06-14 09:00:00",
+                "similarity_score": 0.3462063591478215,
+                "affected_people": 101852.0,
+                "safety_population": 124.0,
+                "next_affected_people": 948.0,
+                "next_safety_population": 118.0,
+                "escalation_risk": "Low"
+            },
+            {
+                "historical_datetime": "2024-12-07 09:00:00",
+                "similarity_score": 0.3414082851068996,
+                "affected_people": 420047.0,
+                "safety_population": 1463.0,
+                "next_affected_people": 420053.0,
+                "next_safety_population": 1463.0,
+                "escalation_risk": "Moderate"
+            },
+            {
+                "historical_datetime": "2023-12-24 09:00:00",
+                "similarity_score": 0.3194737315882696,
+                "affected_people": 29814.0,
+                "safety_population": 662.0,
+                "next_affected_people": 14304.0,
+                "next_safety_population": 554.0,
+                "escalation_risk": "Low"
+            }
+        ],
+        "note": "Similarity is distance-derived feature-space similarity. It is not probability or forecast confidence."
+    },
+    "explainability": {
+        "current_deployment_top_contributors": [
+            {
+                "feature": "prev_people_in_safety_centres",
+                "feature_value": 263.0,
+                "shap_value": 0.1842258741274552,
+                "direction": "Pushes predicted change upward"
+            },
+            {
+                "feature": "current_heavy_rain_flag",
+                "feature_value": 1.0,
+                "shap_value": -0.157871370931473,
+                "direction": "Pushes predicted change downward"
+            },
+            {
+                "feature": "affected_people_log_change_from_prev",
+                "feature_value": 0.0009679957196038,
+                "shap_value": -0.1391247532755309,
+                "direction": "Pushes predicted change downward"
+            },
+            {
+                "feature": "affected_people_change_from_prev",
+                "feature_value": 16.0,
+                "shap_value": -0.1262786348918416,
+                "direction": "Pushes predicted change downward"
+            },
+            {
+                "feature": "landslide_districts_at_risk",
+                "feature_value": 0.0,
+                "shap_value": -0.1169108655744046,
+                "direction": "Pushes predicted change downward"
+            },
+            {
+                "feature": "affected_families",
+                "feature_value": 4209.0,
+                "shap_value": -0.1162832112157214,
+                "direction": "Pushes predicted change downward"
+            },
+            {
+                "feature": "latest_landslide_age_hours",
+                "feature_value": 120.5,
+                "shap_value": -0.1146103326578212,
+                "direction": "Pushes predicted change downward"
+            },
+            {
+                "feature": "log_current_affected_families",
+                "feature_value": 8.345217926676428,
+                "shap_value": -0.1024305865081108,
+                "direction": "Pushes predicted change downward"
+            },
+            {
+                "feature": "landslide_level1_districts",
+                "feature_value": 0.0,
+                "shap_value": -0.0959283548535648,
+                "direction": "Pushes predicted change downward"
+            },
+            {
+                "feature": "affected_families_change_from_prev",
+                "feature_value": 6.0,
+                "shap_value": -0.0785346629859857,
+                "direction": "Pushes predicted change downward"
+            }
+        ],
+        "global_test_importance": [
+            {
+                "feature": "prev_people_in_safety_centres",
+                "mean_abs_shap": 0.4936379889826879
+            },
+            {
+                "feature": "safety_population_change_from_prev",
+                "mean_abs_shap": 0.3558951073633253
+            },
+            {
+                "feature": "report_dayofweek",
+                "mean_abs_shap": 0.2913826708556679
+            },
+            {
+                "feature": "affected_people_log_change_from_prev",
+                "mean_abs_shap": 0.2587564609556511
+            },
+            {
+                "feature": "affected_people_change_from_prev",
+                "mean_abs_shap": 0.2421652638176558
+            },
+            {
+                "feature": "current_heavy_rain_flag",
+                "mean_abs_shap": 0.2345856561921866
+            },
+            {
+                "feature": "dayofyear_cos",
+                "mean_abs_shap": 0.1697281065754961
+            },
+            {
+                "feature": "landslide_districts_at_risk",
+                "mean_abs_shap": 0.1417606480028177
+            },
+            {
+                "feature": "landslide_level1_districts",
+                "mean_abs_shap": 0.1377173385612189
+            },
+            {
+                "feature": "affected_families_change_from_prev",
+                "mean_abs_shap": 0.1370058964980876
+            },
+            {
+                "feature": "weather_reports_24h",
+                "mean_abs_shap": 0.1176217475519717
+            },
+            {
+                "feature": "missingindicator_weather_max_rainfall_threshold_24h",
+                "mean_abs_shap": 0.1095811293433012
+            },
+            {
+                "feature": "affected_families",
+                "mean_abs_shap": 0.1029447316837347
+            },
+            {
+                "feature": "previous_report_gap_hours",
+                "mean_abs_shap": 0.0991051187041568
+            },
+            {
+                "feature": "weather_max_warning_level_24h",
+                "mean_abs_shap": 0.0930285186003121
+            }
+        ],
+        "current_waterfall_image": "outputs/figures/shap_latest_deployment_waterfall.png",
+        "global_bar_image": "outputs/figures/shap_global_bar.png",
+        "global_beeswarm_image": "outputs/figures/shap_beeswarm.png",
+        "note": "SHAP explains contributions to the model-predicted signed-log change in affected people. SHAP values are not causal effects."
+    },
+    "trend_history": {
+        "status_counts": {
+            "Normal Increase": 520,
+            "Decrease": 396,
+            "Stable": 293,
+            "Insufficient Historical Baseline": 73,
+            "Gap / No Comparable Previous Report": 36,
+            "Rapid Growth Anomaly": 5
+        },
+        "rapid_growth_anomaly_count": 5,
+        "rapid_growth_percentage": 0.3779289493575208
+    },
+    "performance": {
+        "human_impact": {
+            "test_mae": 21306.6,
+            "test_rmse": 65900.17,
+            "test_median_ae": 40.76,
+            "test_rmsle": 3.6472,
+            "test_r2": 0.6481,
+            "persistence_test_mae": 21283.91,
+            "interpretation": "The ML model did not outperform persistence on held-out test MAE."
+        },
+        "safety_usage": {
+            "test_accuracy": 0.886667,
+            "test_balanced_accuracy": 0.886764,
+            "test_f1": 0.884354
+        },
+        "safety_demand": {
+            "test_mae": 439.27,
+            "test_rmse": 947.27,
+            "test_median_ae": 8.64,
+            "test_rmsle": 2.4593,
+            "test_r2": 0.9724,
+            "persistence_test_mae": 381.37,
+            "interpretation": "Held-out results are mixed: MAE is worse than persistence, while RMSE, RMSLE and R2 improve."
+        },
+        "experimental_escalation_risk": {
+            "test_accuracy": 0.48,
+            "test_balanced_accuracy": 0.33838,
+            "test_macro_f1": 0.33726,
+            "test_weighted_f1": 0.51472,
+            "interpretation": "Experimental research output with limited temporal generalization. Not an official warning."
+        },
+        "human_impact_uncertainty": {
+            "nominal_interval": "90% model-based prediction interval",
+            "held_out_empirical_coverage": 0.8067,
+            "average_interval_width": 22664.99,
+            "median_interval_width": 7969.54,
+            "interpretation": "The nominal 90% interval achieved 80.67% empirical coverage on the held-out test period."
+        }
+    },
+    "map": {
+        "path": "data/processed/floodimpact_lk_district_hazard_map.html",
+        "available": true,
+        "scope": "District-level hazard context only",
+        "note": "District map outputs are hazard-context indicators only. National human-impact and safety-demand predictions must not be interpreted as district forecasts."
+    },
+    "safety_disclaimers": [
+        "Human-impact and safety-demand forecasts are national multi-hazard forecasts.",
+        "They are not Flood-only or Landslide-only forecasts.",
+        "DRPI and SCPI are research-derived FloodImpact-LK indices, not official government warning categories.",
+        "SCPI does not represent actual safety-centre occupancy capacity.",
+        "Experimental escalation risk is not an official DMC, NBRO or Irrigation Department warning.",
+        "Stale or unavailable hazard information must not be interpreted as absence of hazard."
+    ]
+}
