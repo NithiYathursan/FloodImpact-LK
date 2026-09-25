@@ -244,6 +244,9 @@ def scrape_all_metadata(
     )
 
     all_records = []
+    progress_file = METADATA_FILE.with_name(
+        "river_reports_metadata_progress.csv"
+    )
 
     offset = 0
     page_number = 1
@@ -296,8 +299,12 @@ def scrape_all_metadata(
                     retry_error
                 )
 
-                break
-
+                raise RuntimeError(
+                    "River metadata scraping was interrupted "
+                    f"at page {page_number}, offset={offset}. "
+                    "Canonical metadata was NOT replaced."
+                ) from retry_error
+            
         if len(records) == 0:
 
             consecutive_empty_pages += 1
@@ -334,7 +341,7 @@ def scrape_all_metadata(
             )
 
             temp_df.to_csv(
-                METADATA_FILE,
+                progress_file,
                 index=False
             )
 
@@ -384,11 +391,26 @@ def scrape_all_metadata(
         .reset_index(drop=True)
     )
 
+    # df.to_csv(
+    #     METADATA_FILE,
+    #     index=False
+    # )
+    temp_metadata_file = METADATA_FILE.with_name(
+    "river_reports_metadata_tmp.csv"
+    )
+
     df.to_csv(
-        METADATA_FILE,
+        temp_metadata_file,
         index=False
     )
 
+    temp_metadata_file.replace(
+        METADATA_FILE
+    )
+
+    if progress_file.exists():
+        progress_file.unlink()
+        
     print(
         "\n**********************************************"
     )
@@ -566,17 +588,15 @@ def download_pdfs(
         .reset_index(drop=True)
     )
 
-    print(
-        "\nRiver PDFs selected:",
-        len(download_df)
-    )
+    
+# =========================================================
+# Identify only NEW / MISSING River PDFs
+# =========================================================
 
-    successful = 0
-    failed = 0
+    pending_downloads = []
+    existing_count = 0
 
-    failed_records = []
-
-    for index, row in download_df.iterrows():
+    for _, row in download_df.iterrows():
 
         filename = build_filename(
             row
@@ -587,24 +607,56 @@ def download_pdfs(
             / filename
         )
 
-        # Resume support
-
         if (
             file_path.exists()
             and file_path.stat().st_size > 1000
         ):
-
-            print(
-                f"[{index + 1}/{len(download_df)}] "
-                f"Already exists: {filename}"
-            )
-
-            successful += 1
-
+            existing_count += 1
             continue
 
+        pending_downloads.append(
+            (
+                row,
+                filename,
+                file_path,
+            )
+        )
+
+
+    print(
+        "\nRiver PDF records in refreshed metadata:",
+        len(download_df)
+    )
+
+    print(
+        "Already available locally:",
+        existing_count
+    )
+
+    print(
+        "New / missing River PDFs to download:",
+        len(pending_downloads)
+    )
+
+
+    successful = existing_count
+    failed = 0
+
+    failed_records = []
+
+    # Download only NEW / MISSING River PDFs
+
+    for index, (
+        row,
+        filename,
+        file_path,
+    ) in enumerate(
+        pending_downloads,
+        start=1,
+    ):
+
         print(
-            f"[{index + 1}/{len(download_df)}] "
+            f"[{index}/{len(pending_downloads)}] "
             f"Downloading {filename}"
         )
 
@@ -663,7 +715,6 @@ def download_pdfs(
             )
 
         time.sleep(delay)
-
     # Save failures
 
     if failed_records:
