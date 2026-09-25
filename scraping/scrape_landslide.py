@@ -9,10 +9,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-
-# =========================================================
 # PROJECT PATHS
-# =========================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -38,10 +35,7 @@ FAILED_FILE = (
     / "failed_downloads.csv"
 )
 
-
-# =========================================================
 # DMC LANDSLIDE WARNING ARCHIVE
-# =========================================================
 
 BASE_URL = "https://www.dmc.gov.lk"
 
@@ -67,10 +61,7 @@ HEADERS = {
 session = requests.Session()
 session.headers.update(HEADERS)
 
-
-# =========================================================
 # BASIC EXTRACTION
-# =========================================================
 
 def extract_date(text):
 
@@ -98,9 +89,7 @@ def extract_time(text):
     return None
 
 
-# =========================================================
 # LANGUAGE DETECTION
-# =========================================================
 
 def detect_language(title):
 
@@ -120,10 +109,7 @@ def detect_language(title):
 
     return "English"
 
-
-# =========================================================
 # LANDSLIDE REPORT CLASSIFICATION
-# =========================================================
 
 def classify_landslide_report(title):
 
@@ -169,10 +155,7 @@ def classify_landslide_report(title):
 
     return "other"
 
-
-# =========================================================
 # PROJECT RELEVANCE
-# =========================================================
 
 def is_project_relevant(title, report_type):
 
@@ -206,9 +189,7 @@ def is_project_relevant(title, report_type):
     return report_type in relevant_types
 
 
-# =========================================================
 # SCRAPE ONE PAGE
-# =========================================================
 
 def scrape_page(offset):
 
@@ -244,9 +225,7 @@ def scrape_page(offset):
         if not report_date:
             continue
 
-        # ---------------------------------------------
         # PDF URL
-        # ---------------------------------------------
 
         pdf_url = None
 
@@ -269,9 +248,7 @@ def scrape_page(offset):
         if not pdf_url:
             continue
 
-        # ---------------------------------------------
         # Metadata
-        # ---------------------------------------------
 
         title = row_text.split(
             report_date
@@ -310,10 +287,7 @@ def scrape_page(offset):
 
     return records
 
-
-# =========================================================
 # SCRAPE FULL METADATA
-# =========================================================
 
 def scrape_all_metadata(
     delay=0.3,
@@ -326,7 +300,9 @@ def scrape_all_metadata(
     )
 
     all_records = []
-
+    progress_file = METADATA_FILE.with_name(
+        "landslide_reports_metadata_progress.csv"
+    )
     offset = 0
     page_number = 1
 
@@ -378,7 +354,11 @@ def scrape_all_metadata(
                     retry_error
                 )
 
-                break
+                raise RuntimeError(
+                    "Landslide metadata scraping was interrupted "
+                    f"at page {page_number}, offset={offset}. "
+                    "Canonical metadata was NOT replaced."
+                ) from retry_error
 
         if len(records) == 0:
 
@@ -400,9 +380,7 @@ def scrape_all_metadata(
             records
         )
 
-        # ---------------------------------------------
         # Periodic save
-        # ---------------------------------------------
 
         if (
             page_number % 50 == 0
@@ -418,7 +396,7 @@ def scrape_all_metadata(
             )
 
             temp_df.to_csv(
-                METADATA_FILE,
+                progress_file,
                 index=False
             )
 
@@ -432,9 +410,7 @@ def scrape_all_metadata(
 
         time.sleep(delay)
 
-    # =====================================================
     # CLEAN METADATA
-    # =====================================================
 
     df = pd.DataFrame(
         all_records
@@ -469,11 +445,22 @@ def scrape_all_metadata(
         )
         .reset_index(drop=True)
     )
+    temp_metadata_file = METADATA_FILE.with_name(
+    "landslide_reports_metadata_tmp.csv"
+    )
 
     df.to_csv(
-        METADATA_FILE,
+        temp_metadata_file,
         index=False
     )
+
+    temp_metadata_file.replace(
+        METADATA_FILE
+    )
+
+    if progress_file.exists():
+        progress_file.unlink()        
+    
 
     print(
         "\n**********************************************"
@@ -533,9 +520,7 @@ def scrape_all_metadata(
     return df
 
 
-# =========================================================
 # LOAD EXISTING METADATA
-# =========================================================
 
 def load_existing_metadata():
 
@@ -557,10 +542,7 @@ def load_existing_metadata():
 
     return df
 
-
-# =========================================================
 # BUILD PDF FILE NAME
-# =========================================================
 
 def build_filename(row):
 
@@ -603,10 +585,7 @@ def build_filename(row):
 
     return filename
 
-
-# =========================================================
 # DOWNLOAD PDFs
-# =========================================================
 
 def download_pdfs(
     df,
@@ -619,9 +598,7 @@ def download_pdfs(
 
     download_df = df.copy()
 
-    # ---------------------------------------------
     # Date filtering
-    # ---------------------------------------------
 
     if from_date:
 
@@ -643,9 +620,7 @@ def download_pdfs(
             download_df["date"] <= end
         ]
 
-    # ---------------------------------------------
     # Project relevance
-    # ---------------------------------------------
 
     if relevant_only:
 
@@ -664,9 +639,9 @@ def download_pdfs(
             relevant_mask
         ]
 
-    # ---------------------------------------------
+    
     # Language filtering
-    # ---------------------------------------------
+    
 
     if english_only:
 
@@ -683,17 +658,13 @@ def download_pdfs(
         .reset_index(drop=True)
     )
 
-    print(
-        "\nLandslide PDFs selected:",
-        len(download_df)
-    )
 
-    successful = 0
-    failed = 0
+# Identify only NEW / MISSING Landslide PDFs
 
-    failed_records = []
+    pending_downloads = []
+    existing_count = 0
 
-    for index, row in download_df.iterrows():
+    for _, row in download_df.iterrows():
 
         filename = build_filename(
             row
@@ -704,26 +675,57 @@ def download_pdfs(
             / filename
         )
 
-        # ---------------------------------------------
-        # Resume support
-        # ---------------------------------------------
-
         if (
             file_path.exists()
             and file_path.stat().st_size > 1000
         ):
-
-            print(
-                f"[{index + 1}/{len(download_df)}] "
-                f"Already exists: {filename}"
-            )
-
-            successful += 1
-
+            existing_count += 1
             continue
 
+        pending_downloads.append(
+            (
+                row,
+                filename,
+                file_path,
+            )
+        )
+
+
+    print(
+        "\nLandslide PDF records in refreshed metadata:",
+        len(download_df)
+    )
+
+    print(
+        "Already available locally:",
+        existing_count
+    )
+
+    print(
+        "New / missing Landslide PDFs to download:",
+        len(pending_downloads)
+    )
+
+
+    successful = existing_count
+    failed = 0
+
+    failed_records = []
+
+
+    # Download only NEW / MISSING Landslide PDFs
+
+    for index, (
+        row,
+        filename,
+        file_path,
+    ) in enumerate(
+        pending_downloads,
+        start=1,
+    ):
+
         print(
-            f"[{index + 1}/{len(download_df)}] "
+            f"[{index}/{len(pending_downloads)}] "
             f"Downloading {filename}"
         )
 
@@ -783,9 +785,7 @@ def download_pdfs(
 
         time.sleep(delay)
 
-    # ---------------------------------------------
     # Failed downloads log
-    # ---------------------------------------------
 
     if failed_records:
 
@@ -823,10 +823,7 @@ def download_pdfs(
         OUTPUT_DIR
     )
 
-
-# =========================================================
 # MAIN
-# =========================================================
 
 if __name__ == "__main__":
 
@@ -900,9 +897,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    # =====================================================
     # LOAD OR SCRAPE METADATA
-    # =====================================================
 
     if args.download_only:
 
@@ -920,9 +915,7 @@ if __name__ == "__main__":
             "No landslide metadata available."
         )
 
-    # =====================================================
     # DOWNLOAD
-    # =====================================================
 
     if not args.metadata_only:
 

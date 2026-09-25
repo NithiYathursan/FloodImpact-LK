@@ -8,9 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 import hashlib
 
-# =========================================================
 # PROJECT PATHS
-# =========================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -32,9 +30,7 @@ METADATA_FILE = (
 )
 
 
-# =========================================================
 # DMC CONFIGURATION
-# =========================================================
 
 BASE_URL = "https://www.dmc.gov.lk"
 
@@ -61,9 +57,7 @@ session = requests.Session()
 session.headers.update(HEADERS)
 
 
-# =========================================================
 # HELPER FUNCTIONS
-# =========================================================
 
 def extract_date(text):
     """
@@ -113,10 +107,8 @@ def is_situation_report(title):
         and "dry weather" not in title
     )
 
-
-# =========================================================
 # SCRAPE ONE ARCHIVE PAGE
-# =========================================================
+
 
 def scrape_page(offset):
 
@@ -153,10 +145,7 @@ def scrape_page(offset):
         if not report_date:
             continue
 
-
-        # ---------------------------------------------
         # Find PDF
-        # ---------------------------------------------
 
         pdf_url = None
 
@@ -180,10 +169,7 @@ def scrape_page(offset):
         if not pdf_url:
             continue
 
-
-        # ---------------------------------------------
         # Title
-        # ---------------------------------------------
 
         title = row_text.split(
             report_date
@@ -224,9 +210,7 @@ def scrape_page(offset):
     return records
 
 
-# =========================================================
 # SCRAPE ALL DMC METADATA
-# =========================================================
 
 def scrape_all_metadata(
     delay=0.4,
@@ -238,6 +222,9 @@ def scrape_all_metadata(
     )
 
     all_records = []
+    progress_file = METADATA_FILE.with_name(
+    "dmc_situation_reports_metadata_progress.csv"
+    )
 
     offset = 0
     page_number = 1
@@ -293,12 +280,13 @@ def scrape_all_metadata(
                     e2
                 )
 
-                break
+                raise RuntimeError(
+                    "DMC metadata scraping was interrupted "
+                    f"at page {page_number}, offset={offset}. "
+                    "Canonical metadata was NOT replaced."
+                ) from e2
 
-
-        # ---------------------------------------------
         # Stop when archive has no more report rows
-        # ---------------------------------------------
 
         if not records:
 
@@ -334,11 +322,8 @@ def scrape_all_metadata(
         all_records.extend(
             records
         )
-
-
-        # ---------------------------------------------
         # Periodically save progress
-        # ---------------------------------------------
+        
 
         if (
             page_number % 20 == 0
@@ -357,7 +342,7 @@ def scrape_all_metadata(
             )
 
             temp_df.to_csv(
-                METADATA_FILE,
+                progress_file,
                 index=False
             )
 
@@ -372,10 +357,7 @@ def scrape_all_metadata(
 
         time.sleep(delay)
 
-
-    # =====================================================
     # FINAL CLEANING
-    # =====================================================
 
     df = pd.DataFrame(
         all_records
@@ -418,10 +400,21 @@ def scrape_all_metadata(
     )
 
 
+    temp_metadata_file = METADATA_FILE.with_name(
+    "dmc_situation_reports_metadata_tmp.csv"
+    )
+
     df.to_csv(
-        METADATA_FILE,
+        temp_metadata_file,
         index=False
     )
+
+    temp_metadata_file.replace(
+        METADATA_FILE
+    )
+
+    if progress_file.exists():
+        progress_file.unlink()
 
 
     print(
@@ -462,10 +455,29 @@ def scrape_all_metadata(
 
     return df
 
+# LOAD EXISTING METADATA
 
-# =========================================================
+def load_existing_metadata():
+
+    if not METADATA_FILE.exists():
+
+        raise FileNotFoundError(
+            "dmc_situation_reports_metadata.csv not found. "
+            "Run metadata scraping first."
+        )
+
+    df = pd.read_csv(
+        METADATA_FILE
+    )
+
+    df["date"] = pd.to_datetime(
+        df["date"],
+        errors="coerce"
+    )
+
+    return df
+
 # DOWNLOAD PDF FILES
-# =========================================================
 
 def download_pdfs(
     df,
@@ -511,35 +523,24 @@ def download_pdfs(
         )
     )
 
+    # =========================================================
+    # Identify only NEW / MISSING PDFs first
+    # =========================================================
 
-    print(
-        "\nPDFs selected for download:",
-        len(download_df)
-    )
+    pending_downloads = []
+    existing_count = 0
 
-
-    successful = 0
-    failed = 0
-
-
-    for index, row in download_df.iterrows():
+    for _, row in download_df.iterrows():
 
         date_text = (
             row["date"]
             .strftime("%Y%m%d")
         )
 
-
         time_text = (
-            str(
-                row["time"]
-            )
-            .replace(
-                ":",
-                ""
-            )
+            str(row["time"])
+            .replace(":", "")
         )
-
 
         if (
             time_text.lower()
@@ -548,8 +549,8 @@ def download_pdfs(
             time_text = "unknown"
 
         url_hash = hashlib.sha1(
-            str(row["pdf_url"]).encode("utf-8")).hexdigest()[:8]
-
+            str(row["pdf_url"]).encode("utf-8")
+        ).hexdigest()[:8]
 
         filename = (
             f"situation_"
@@ -563,31 +564,60 @@ def download_pdfs(
             / filename
         )
 
-
-        # ---------------------------------------------
-        # Resume support
-        # ---------------------------------------------
-
+        # Existing valid PDF -> no further work needed
         if (
             file_path.exists()
             and file_path.stat().st_size > 1000
         ):
-
-            print(
-                f"[{index + 1}/{len(download_df)}] "
-                f"Already exists: {filename}"
-            )
-
-            successful += 1
-
+            existing_count += 1
             continue
 
-
-        print(
-            f"[{index + 1}/{len(download_df)}] "
-            f"Downloading {filename}"
+        # Missing, incomplete, or new PDF
+        pending_downloads.append(
+            (
+                row,
+                filename,
+                file_path,
+            )
         )
 
+
+    print(
+        "\nPDF records in refreshed metadata:",
+        len(download_df)
+    )
+
+    print(
+        "Already available locally:",
+        existing_count
+    )
+
+    print(
+        "New / missing PDFs to download:",
+        len(pending_downloads)
+    )
+
+
+    # Preserve previous success-count meaning:
+    # existing valid files already count as successful.
+    successful = existing_count
+    failed = 0
+
+    # Download only NEW / MISSING PDFs
+
+    for index, (
+        row,
+        filename,
+        file_path,
+    ) in enumerate(
+        pending_downloads,
+        start=1,
+    ):
+
+        print(
+            f"[{index}/{len(pending_downloads)}] "
+            f"Downloading {filename}"
+        )
 
         try:
 
@@ -598,7 +628,6 @@ def download_pdfs(
 
             response.raise_for_status()
 
-
             if not response.content.startswith(
                 b"%PDF"
             ):
@@ -608,16 +637,13 @@ def download_pdfs(
                 )
 
                 failed += 1
-
                 continue
-
 
             file_path.write_bytes(
                 response.content
             )
 
             successful += 1
-
 
         except Exception as e:
 
@@ -628,41 +654,9 @@ def download_pdfs(
 
             failed += 1
 
-
         time.sleep(delay)
 
-
-    print(
-        "\n======================================"
-    )
-
-    print(
-        "PDF DOWNLOAD COMPLETED"
-    )
-
-    print(
-        "======================================"
-    )
-
-    print(
-        "Successful:",
-        successful
-    )
-
-    print(
-        "Failed:",
-        failed
-    )
-
-    print(
-        "Folder:",
-        OUTPUT_DIR
-    )
-
-
-# =========================================================
 # MAIN
-# =========================================================
 
 if __name__ == "__main__":
 
@@ -686,7 +680,19 @@ if __name__ == "__main__":
         )
 
     )
+    parser.add_argument(
 
+    "--download-only",
+
+    action="store_true",
+
+    help=(
+        "Use existing metadata CSV "
+        "and download PDFs without "
+        "scraping metadata again."
+    )
+
+    )
 
     parser.add_argument(
 
@@ -733,9 +739,15 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
 
-    metadata = scrape_all_metadata(
+    if args.download_only:
 
-        max_pages=args.max_pages
+        metadata = load_existing_metadata()
+
+    else:
+
+        metadata = scrape_all_metadata(
+
+            max_pages=args.max_pages
 
     )
 

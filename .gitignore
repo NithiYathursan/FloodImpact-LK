@@ -11,7 +11,7 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
-# Raw scraped data
+# Raw scraped PDFs
 data/raw/situation_reports/*.pdf
 data/raw/weather_reports/*.pdf
 data/raw/river_reports/*.pdf
@@ -20,13 +20,29 @@ data/raw/landslide_reports/*.pdf
 # Temporary / failed download files
 data/raw/**/failed_downloads.csv
 
+# Runtime / temporary processed files
+data/processed/*.bak
+data/processed/latest_update_status.json
+
 # Model files
 *.pkl
 *.joblib
 
+# Keep final FloodImpact-LK trained models
+!models/*.joblib
+
 # OS / editor files
 .DS_Store
 Thumbs.db
-.vscode/
+.vscode/# Development backups / diagnostic helpers
+app_old_backup.py
+extract_live_pipeline_source.py
+inspect_latest_metadata.py
+inspect_latest_situation.py
+inspect_latest_totals.py
+landslide_parser_extract.txt
+live_pipeline_source.txt
 
-Add-Content .gitignore "`n# Keep final FloodImpact-LK trained models`n!models/*.joblib"
+# Partial scraper metadata
+data/raw/weather_reports/weather_reports_metadata_partial_*.csv
+

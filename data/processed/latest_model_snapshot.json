@@ -1,29 +1,42 @@
 {
-    "snapshot_datetime": "2026-08-14 10:00:00",
-    "forecast_definition": "Next eligible DMC Situation Report within a maximum 48-hour gap",
-    "geographic_scope": "Sri Lanka - national",
-    "reported_hazards": "Flood, Landslide, Heavy Rain, Strong Wind",
-    "current_affected_people": 16536.0,
-    "predicted_next_affected_people": 16535.577753781483,
-    "predicted_affected_change": -0.42224621851810135,
-    "prediction_lower_90": 7224.096841908622,
-    "prediction_upper_90": 17781.324498142618,
-    "prediction_interval_label": "90% model-based prediction interval",
-    "current_safety_population": 188.0,
-    "safety_use_probability": 0.9610734464871888,
-    "safety_use_prediction": 1,
-    "predicted_next_safety_population": 185.63480990286916,
-    "experimental_escalation_risk": "Moderate",
-    "risk_probabilities": {
-        "Critical": 0.0032049017749481226,
-        "High": 0.04103838076890574,
-        "Low": 0.2826597277672548,
-        "Moderate": 0.6730969896888913
-    },
-    "hazard_flags": {
-        "flood": 1,
-        "landslide": 1,
-        "heavy_rain": 1
-    },
-    "important_note": "Human-impact and safety-demand forecasts are national multi-hazard forecasts. They must not be interpreted as Flood-only, Landslide-only, or district-level forecasts."
+  "snapshot_datetime": "2026-09-24 10:00:00",
+  "forecast_definition": "Next eligible DMC Situation Report within a maximum 48-hour gap",
+  "geographic_scope": "Sri Lanka - national",
+  "reported_hazards": [
+    "Flood",
+    "Landslide",
+    "Heavy Rain",
+    "Strong Wind",
+    "Lightning"
+  ],
+  "current_affected_people": 2402.0,
+  "predicted_next_affected_people": 2502.5753396187474,
+  "predicted_change": 100.5753396187474,
+  "predicted_affected_change": 100.5753396187474,
+  "prediction_interval_lower": 407.07441108425337,
+  "prediction_interval_upper": 7688.449411423889,
+  "lower_90": 407.07441108425337,
+  "upper_90": 7688.449411423889,
+  "prediction_interval_90": {
+    "lower": 407.07441108425337,
+    "upper": 7688.449411423889
+  },
+  "prediction_interval_label": "90% model-based prediction interval",
+  "current_safety_population": 97.0,
+  "safety_use_probability": 0.9421995497153639,
+  "safety_use_prediction": 1,
+  "predicted_next_safety_population": 104.66118443892682,
+  "experimental_escalation_risk": "Critical",
+  "risk_probabilities": {
+    "Critical": 0.5863212050445054,
+    "High": 0.06745974421045733,
+    "Low": 0.043490225024194,
+    "Moderate": 0.3027288257208433
+  },
+  "hazard_flags": {
+    "flood": 1,
+    "landslide": 1,
+    "heavy_rain": 1
+  },
+  "important_note": "Human-impact and safety-demand forecasts are national multi-hazard forecasts. They must not be interpreted as Flood-only, Landslide-only, or district-level forecasts."
 }

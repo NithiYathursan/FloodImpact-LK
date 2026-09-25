@@ -1,45 +1,50 @@
 {
-    "snapshot_datetime": "2026-08-14 10:00:00",
-    "hazard_context": {
-        "flood_context_score": 50.0,
-        "weather_context_score": 50.0,
-        "landslide_context_score": 50.0,
-        "combined_hazard_context_score": 50.0
+  "snapshot_datetime": "2026-09-24 10:00:00",
+  "hazard_context": {
+    "flood_context_score": 100.0,
+    "weather_context_score": 66.66666666666666,
+    "landslide_context_score": 100.0,
+    "combined_context_score": 88.88888888888887,
+    "combined_hazard_context_score": 88.88888888888887
+  },
+  "trend": {
+    "trend": "Increasing",
+    "change_from_previous": 744.0,
+    "rapid_growth_score": 54.54545454545454,
+    "monitoring_status": "Normal Increase"
+  },
+  "DRPI": {
+    "score": 61.67924133151987,
+    "band": "High",
+    "components": {
+      "Current Human Impact": 57.61124121779859,
+      "Predicted Impact Growth": 44.587155963302756,
+      "Predicted Safety Demand": 62.76346604215457,
+      "Hazard Context": 88.88888888888887,
+      "Rapid Growth": 54.54545454545454
     },
-    "trend": {
-        "trend": "Increasing",
-        "change_from_previous": 16.0,
-        "rapid_growth_score": 5.769230769230769,
-        "monitoring_status": "Normal Increase"
+    "note": "Research-derived FloodImpact-LK priority indicator; not an official warning."
+  },
+  "SCPI": {
+    "score": 62.664703978954684,
+    "band": "High",
+    "components": {
+      "Current Safety Population": 62.451209992193604,
+      "Forecast Safety Population": 62.76346604215457,
+      "Safety-Use Probability": 94.2199549715364,
+      "Predicted Safety Growth": 5.0,
+      "Hazard Context": 88.88888888888887
     },
-    "DRPI": {
-        "score": 39.647210712784485,
-        "band": "Moderate",
-        "components": {
-            "Current Human Impact": 75.72209211553474,
-            "Predicted Impact Growth": 0.0,
-            "Predicted Safety Demand": 66.7447306791569,
-            "Hazard Context": 50.0,
-            "Rapid Growth": 5.769230769230769
-        },
-        "note": "Research-derived FloodImpact-LK priority indicator; not an official warning."
-    },
-    "SCPI": {
-        "score": 55.99742521389678,
-        "band": "High",
-        "components": {
-            "Current Safety Population": 67.13505074160811,
-            "Forecast Safety Population": 66.7447306791569,
-            "Safety-Use Probability": 96.10734464871888,
-            "Predicted Safety Growth": 0.0,
-            "Hazard Context": 50.0
-        },
-        "note": "Research-derived relative safety-demand pressure indicator. It does not represent actual safety-centre capacity utilization."
-    },
-    "freshness": {
-        "river_age_hours": 21.5,
-        "river_status": "Current",
-        "landslide_age_hours": 120.5,
-        "landslide_status": "Stale"
-    }
+    "note": "Research-derived relative safety-demand pressure indicator. It does not represent actual safety-centre capacity utilization."
+  },
+  "freshness": {
+    "river_age_hours": 0.5,
+    "river_status": "Current",
+    "river_latest_datetime": "2026-09-24T09:30:00",
+    "river_station_count": 39,
+    "river_alert_flood_stations": 9,
+    "landslide_age_hours": 6.0,
+    "landslide_status": "Current",
+    "landslide_latest_datetime": "2026-09-24T04:00:00"
+  }
 }
