@@ -50,10 +50,10 @@
         "safety_population_log_change_from_prev"
     ],
     "feature_count": 46,
-    "development_rows": 1131,
-    "development_start": "2023-01-02 06:00:00",
-    "development_end": "2025-12-16 06:00:00",
-    "test_rows": 150,
+    "development_rows": 3494,
+    "development_start": "2018-01-02 12:00:00",
+    "development_end": "2024-12-28 09:00:00",
+    "test_rows": 518,
     "human_impact": {
         "model": "GradientBoostingRegressor",
         "loss": "huber",
