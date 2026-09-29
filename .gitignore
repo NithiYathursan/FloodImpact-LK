@@ -1,30 +1,40 @@
-# Virtual environment
+
+# Virtual environments
 .venv/
 venv/
 
 # Python cache
+
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
 # Jupyter
+
 .ipynb_checkpoints/
 
 # Raw scraped PDFs
+
 data/raw/situation_reports/*.pdf
 data/raw/weather_reports/*.pdf
 data/raw/river_reports/*.pdf
 data/raw/landslide_reports/*.pdf
 
+# Generated GN map
+data/processed/floodimpact_lk_gn_hazard_map.html
+
 # Temporary / failed download files
+
 data/raw/**/failed_downloads.csv
 
 # Runtime / temporary processed files
+
 data/processed/*.bak
 data/processed/latest_update_status.json
 
 # Model files
+
 *.pkl
 *.joblib
 
@@ -34,15 +44,36 @@ data/processed/latest_update_status.json
 # OS / editor files
 .DS_Store
 Thumbs.db
-.vscode/# Development backups / diagnostic helpers
+.vscode/
+
+# Development backups / diagnostic helpers
 app_old_backup.py
+app_backup_before_gn_integration.py
+app_before_final_check.py
+app_before_gn_update.py
+app_before_ui_final.py
+app_with_gn_map.py
+
+gn_hazard_map_backup_before_fix.py
+gn_hazard_map_before_kandy_fix.py
+gn_hazard_map_before_multihazard.py
+gn_hazard_map_multihazard.py
+gn_hazard_map_multihazard_fixed.py
+
+latest_inference_before_final_check.py
+latest_inference_before_gn_update.py
+
 extract_live_pipeline_source.py
 inspect_latest_metadata.py
 inspect_latest_situation.py
 inspect_latest_totals.py
+
 landslide_parser_extract.txt
 live_pipeline_source.txt
 
 # Partial scraper metadata
+
 data/raw/weather_reports/weather_reports_metadata_partial_*.csv
 
+# Generated administrative boundary data
+data/boundaries/
