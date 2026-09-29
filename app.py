@@ -7,6 +7,39 @@ import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
 
+try:
+    from gn_hazard_map import (
+        build_gn_map,
+        list_districts as list_gn_districts,
+    )
+    GN_MAP_AVAILABLE = True
+    GN_MAP_IMPORT_ERROR = ""
+except Exception as exc:
+    build_gn_map = None
+    list_gn_districts = None
+    GN_MAP_AVAILABLE = False
+    GN_MAP_IMPORT_ERROR = str(exc)
+
+
+@st.cache_data(show_spinner=False)
+def cached_gn_districts():
+    if list_gn_districts is None:
+        return ()
+    return tuple(list_gn_districts())
+
+
+@st.cache_data(show_spinner=False)
+def cached_gn_map(
+    selected_district,
+    snapshot_value,
+):
+    if build_gn_map is None:
+        raise RuntimeError("GN map helper is unavailable.")
+    return build_gn_map(
+        selected_district,
+        snapshot_value,
+    )
+
 
 # FLOODIMPACT-LK INTERACTIVE DASHBOARD
 
@@ -167,7 +200,7 @@ st.markdown(
         background: rgba(150, 150, 150, 0.15);
     }
     .block-container {
-        padding-top: 1.1rem;
+        padding-top: 2.8rem !important;
         padding-bottom: 3rem;
         max-width: 1450px;
     }
@@ -186,24 +219,26 @@ st.markdown(
     }
 
     .hero {
-        padding: 1.35rem 1.55rem;
-        border-radius: 18px;
+    padding: 1.35rem 1.55rem;
+    border-radius: 18px !important;
 
-        background:
-            linear-gradient(
-                120deg,
-                #123c5a 0%,
-                #176b87 58%,
-                #1b8a8f 100%
-            );
+    background:
+        linear-gradient(
+            120deg,
+            #123c5a 0%,
+            #176b87 58%,
+            #1b8a8f 100%
+        );
 
-        color: white;
+    color: white;
+    margin-top: 0.4rem;
+    margin-bottom: 1rem;
 
-        margin-bottom: 1rem;
+    overflow: hidden;
 
-        box-shadow:
-            0 8px 28px
-            rgba(0,0,0,0.12);
+    box-shadow:
+        0 8px 28px
+        rgba(0,0,0,0.12);
     }
 
     .hero-title {
@@ -430,12 +465,28 @@ st.markdown(
         box-sizing: border-box;
     }
 
-    div[data-testid="stMetricLabel"] {
-        color: rgba(255,255,255,0.82) !important;
+    # div[data-testid="stMetricLabel"] {
+    #     color: rgba(255,255,255,0.82) !important;
+    # }
+
+    # div[data-testid="stMetricValue"] {
+    #     color: #ffffff !important;
+    # }
+    div[data-testid="stMetricLabel"],
+    div[data-testid="stMetricLabel"] *,
+    div[data-testid="stMetricValue"],
+    div[data-testid="stMetricValue"] * {
+        color: #ffffff !important;
     }
 
-    div[data-testid="stMetricValue"] {
+    div[data-testid="stMetricLabel"] {
+        opacity: 0.88;
+    }
+
+    div[data-testid="stMetricDelta"],
+    div[data-testid="stMetricDelta"] * {
         color: #ffffff !important;
+        font-weight: 700;
     }
 
     div[data-testid="stMetricDelta"] {
@@ -496,6 +547,140 @@ st.markdown(
     .shap-note b {
         color: #7ee7df !important;
     }
+    /* FORCE METRIC TEXT VISIBLE IN BOTH LIGHT AND DARK MODE */
+    div[data-testid="stMetric"],
+    div[data-testid="stMetric"] * {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+
+    div[data-testid="stMetric"] [data-testid="stMetricLabel"],
+    div[data-testid="stMetric"] [data-testid="stMetricLabel"] * {
+        color: #dce8ee !important;
+        -webkit-text-fill-color: #dce8ee !important;
+        opacity: 1 !important;
+    }
+
+    div[data-testid="stMetric"] [data-testid="stMetricValue"],
+    div[data-testid="stMetric"] [data-testid="stMetricValue"] * {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        opacity: 1 !important;
+    }
+
+
+    /* =====================================================
+       FINAL UI OVERRIDES
+       - Center all card labels and values
+       - Keep long card values readable
+       - Make sidebar buttons readable in light/dark themes
+       - Provide bold HTML table headers
+       ===================================================== */
+
+    .custom-metric-card,
+    .plain-card {
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    .custom-metric-label,
+    .custom-metric-value,
+    .small-label,
+    .big-value,
+    .muted {
+        width: 100% !important;
+        text-align: center !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .metric-delta-positive,
+    .metric-delta-negative,
+    .metric-delta-neutral {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: center !important;
+    }
+
+    /* Native Streamlit metric cards */
+    div[data-testid="stMetric"] {
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    div[data-testid="stMetric"] [data-testid="stMetricLabel"],
+    div[data-testid="stMetric"] [data-testid="stMetricLabel"] *,
+    div[data-testid="stMetric"] [data-testid="stMetricValue"],
+    div[data-testid="stMetric"] [data-testid="stMetricValue"] *,
+    div[data-testid="stMetric"] [data-testid="stMetricDelta"],
+    div[data-testid="stMetric"] [data-testid="stMetricDelta"] * {
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+
+    /* Sidebar buttons remain visible in both light and dark themes */
+    [data-testid="stSidebar"] .stButton > button,
+    [data-testid="stSidebar"] div[data-testid="stButton"] > button {
+        background: #1b5873 !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255,255,255,0.30) !important;
+    }
+
+    [data-testid="stSidebar"] .stButton > button *,
+    [data-testid="stSidebar"] div[data-testid="stButton"] > button * {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        opacity: 1 !important;
+    }
+
+    [data-testid="stSidebar"] .stButton > button[kind="primary"],
+    [data-testid="stSidebar"] div[data-testid="stButton"] > button[kind="primary"] {
+        background: #ff4b4b !important;
+        color: #ffffff !important;
+    }
+
+    /* Small display tables used for Similar Events and Glossary */
+    .table-scroll {
+        width: 100%;
+        overflow-x: auto;
+        margin: 0.35rem 0 1rem 0;
+    }
+
+    .bold-data-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        color: inherit;
+        font-size: 0.95rem;
+    }
+
+    .bold-data-table th {
+        font-weight: 800 !important;
+        text-align: left !important;
+        padding: 10px 12px;
+        border-top: 1px solid rgba(128,128,128,0.22);
+        border-bottom: 1px solid rgba(128,128,128,0.22);
+        border-right: 1px solid rgba(128,128,128,0.16);
+        background: rgba(128,128,128,0.06);
+        color: inherit !important;
+    }
+
+    .bold-data-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(128,128,128,0.20);
+        border-right: 1px solid rgba(128,128,128,0.14);
+        color: inherit !important;
+    }
+
+    .bold-data-table th:first-child,
+    .bold-data-table td:first-child {
+        border-left: 1px solid rgba(128,128,128,0.22);
+    }
+
     </style>
     """,
     unsafe_allow_html=True,
@@ -534,6 +719,25 @@ def load_csv(
     except Exception:
 
         return pd.DataFrame()
+
+
+def bold_table(df):
+
+    if df is None or df.empty:
+        st.info("No table data available.")
+        return
+
+    table_html = df.to_html(
+        index=False,
+        classes="bold-data-table",
+        border=0,
+        escape=True,
+    )
+
+    st.markdown(
+        f'<div class="table-scroll">{table_html}</div>',
+        unsafe_allow_html=True,
+    )
 
 
 def nfmt(
@@ -2963,15 +3167,60 @@ elif page == "🌧️ Hazard Context":
     )
 
 
-    st.dataframe(
+    # st.dataframe(
 
-        freshness_table,
+    #     freshness_table,
 
-        hide_index=True,
+    #     hide_index=True,
 
-        use_container_width=True,
+    #     use_container_width=True,
+    # )
+    # st.markdown(
+    # """
+    # <style>
+    # div[data-testid="stTable"] thead th {
+    #     font-weight: 800 !important;
+    # }
+    # </style>
+    # """,
+    # unsafe_allow_html=True,
+    # )
+
+    # st.table(freshness_table)
+    st.markdown(
+    """
+    <style>
+    .freshness-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.4rem;
+        margin-bottom: 1rem;
+    }
+
+    .freshness-table th {
+        font-weight: 800 !important;
+        text-align: left !important;
+        padding: 10px 12px;
+        border: 1px solid rgba(128,128,128,0.25);
+    }
+
+    .freshness-table td {
+        padding: 10px 12px;
+        border: 1px solid rgba(128,128,128,0.25);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
     )
 
+    st.markdown(
+        freshness_table.to_html(
+            index=False,
+            classes="freshness-table",
+            border=0,
+        ),
+        unsafe_allow_html=True,
+    )
     # RIVER CONTEXT
     
     st.markdown(
@@ -3046,80 +3295,206 @@ elif page == "🌧️ Hazard Context":
 elif page == "🗺️ District Map":
 
     section_intro(
-
-        "<b>Purpose:</b> visualize available "
-        "district-level hazard context across Sri Lanka. "
-        "The map intentionally does not fabricate "
-        "district-level human-impact forecasts."
+        "<b>Purpose:</b> explore verified spatial hazard context "
+        "at two administrative levels. District Overview preserves "
+        "the existing district-level map, while GN Division Detail "
+        "adds official Grama Niladhari boundary localization. "
+        "National human-impact and safety-centre forecasts are "
+        "not downscaled to districts or GN divisions."
     )
 
+    map_view = st.radio(
+        "Map view",
+        [
+            "District Overview",
+            "GN Division Detail",
+        ],
+        horizontal=True,
+        key="district_map_view",
+    )
 
-    if MAP_PATH.exists():
+    if map_view == "District Overview":
 
-        map_html = (
-            MAP_PATH
-            .read_text(
-                encoding="utf-8"
+        if MAP_PATH.exists():
+
+            map_html = (
+                MAP_PATH
+                .read_text(
+                    encoding="utf-8"
+                )
             )
+
+            components.html(
+                map_html,
+                height=720,
+                scrolling=True,
+            )
+
+        else:
+
+            st.error(
+                "District map not found: "
+                "data/processed/"
+                "floodimpact_lk_district_hazard_map.html"
+            )
+
+        warning(
+            "<b>Map interpretation:</b> "
+            "grey means stale/unavailable hazard information, "
+            "not automatically a safe district. "
+            "Human-impact and safety-demand predictions "
+            "are national because the extracted model targets "
+            "are national totals."
         )
 
-
-        components.html(
-
-            map_html,
-
-            height=720,
-
-            scrolling=True,
+        explanation(
+            "the District Map",
+            """
+            The district overview lets you explore available
+            district hazard information spatially. Hover over
+            or interact with districts to inspect available
+            warning context.
+            """,
+            """
+            Use the district overview to identify where verified
+            district hazard information exists. Do not use it as
+            a district-level affected-person forecast.
+            """,
+            """
+            District-level landslide-warning information is
+            available from NBRO-derived bulletin extraction,
+            but freshness is enforced. National target
+            predictions remain separate from spatial
+            district hazard context.
+            """,
+            audience,
         )
 
     else:
 
-        st.error(
-
-            "District map not found: "
-            "data/processed/"
-            "floodimpact_lk_district_hazard_map.html"
+        st.markdown(
+            "### GN Division Detail"
         )
 
+        st.caption(
+            "Official Survey Department GN boundary polygons are "
+            "used only for administrative localization of available "
+            "hazard context."
+        )
 
-    warning(
+        if not GN_MAP_AVAILABLE:
 
-        "<b>Map interpretation:</b> "
-        "grey means stale/unavailable hazard information, "
-        "not automatically a safe district. "
-        "Human-impact and safety-demand predictions "
-        "are national because the extracted model targets "
-        "are national totals."
-    )
+            st.error(
+                "GN map helper could not be loaded. "
+                f"{GN_MAP_IMPORT_ERROR}"
+            )
 
+        else:
 
-    explanation(
+            try:
 
-        "the District Map",
+                district_options = (
+                    cached_gn_districts()
+                )
 
-        """
-        The map lets you explore district hazard
-        information spatially. Hover over or interact
-        with districts to inspect available warning context.
-        """,
+            except Exception as exc:
 
-        """
-        Use the map to identify where verified district
-        hazard information exists. Do not use it as a
-        district-level affected-person forecast.
-        """,
+                district_options = ()
 
-        """
-        District-level landslide-warning information is
-        available from NBRO-derived bulletin extraction,
-        but freshness is enforced. National target
-        predictions remain separate from spatial
-        district hazard context.
-        """,
+                st.error(
+                    "GN district list could not be loaded: "
+                    f"{exc}"
+                )
 
-        audience,
-    )
+            if district_options:
+
+                default_index = (
+                    district_options.index("MONARAGALA")
+                    if "MONARAGALA" in district_options
+                    else 0
+                )
+
+                selected_district = st.selectbox(
+                    "Select district",
+                    district_options,
+                    index=default_index,
+                    key="gn_selected_district",
+                )
+
+                st.caption(
+                    "Strong GN-level highlighting is used only "
+                    "when a GN is explicitly named in an available "
+                    "official bulletin. DSD-level landslide warnings "
+                    "may be displayed across GN polygons inside the "
+                    "parent DSD, but remain DSD-level information."
+                )
+
+                try:
+
+                    with st.spinner(
+                        "Building GN hazard-context map..."
+                    ):
+
+                        gn_map_html = cached_gn_map(
+                            selected_district,
+                            str(snapshot),
+                        )
+
+                    components.html(
+                        gn_map_html,
+                        height=720,
+                        scrolling=True,
+                    )
+
+                except Exception as exc:
+
+                    st.error(
+                        "GN map could not be generated: "
+                        f"{exc}"
+                    )
+
+                warning(
+                    "<b>GN map interpretation:</b> "
+                    "A GN polygon with no matched current warning "
+                    "must not be interpreted as safe. "
+                    "DSD-derived landslide shading is inherited "
+                    "from the parent DSD and is not a GN-specific "
+                    "forecast. National human-impact and "
+                    "safety-centre forecasts are not downscaled "
+                    "to GN divisions."
+                )
+
+                explanation(
+                    "the GN Division Detail",
+                    """
+                    This view shows the Grama Niladhari divisions
+                    inside the selected district and overlays only
+                    the hazard context that can be administratively
+                    localized from available official material.
+                    """,
+                    """
+                    Use this view to understand which GN divisions
+                    are explicitly mentioned in available warnings
+                    and which GN polygons lie inside a warned DSD.
+                    Confirm operational decisions against the
+                    original official warning document.
+                    """,
+                    """
+                    GN geometry is an administrative visualization
+                    layer. Explicit GN mentions are distinguished
+                    from DSD-level inherited context. No national
+                    model output is spatially downscaled to GN level,
+                    so this enhancement does not alter the frozen
+                    forecasting feature set or models.
+                    """,
+                    audience,
+                )
+
+            else:
+
+                st.info(
+                    "No GN districts are currently available."
+                )
 
 # RISK & PRIORITY
 
@@ -3529,37 +3904,34 @@ elif page == "📈 Trend & Anomalies":
 
 
     c1, c2, c3 = st.columns(3)
-        
-    c1.metric(
 
-        "Current trend",
-
-        trend.get(
-            "trend_label",
-            "Unavailable",
-        ),
-    )
-
-    c2.metric(
-
-        "Change from previous report",
-
-        nfmt(
+    with c1:
+        card(
+            "Current trend",
             trend.get(
-                "absolute_change"
-            )
-        ),
-    )
+                "trend_label",
+                "Unavailable",
+            ),
+        )
 
-    c3.metric(
+    with c2:
+        card(
+            "Change from previous report",
+            nfmt(
+                trend.get(
+                    "absolute_change"
+                )
+            ),
+        )
 
-        "Rapid-growth score",
-
-        (
-            f'{nfmt(trend.get("rapid_growth_score"), 2)}'
-            "/100"
-        ),
-    )
+    with c3:
+        card(
+            "Rapid-growth score",
+            (
+                f'{nfmt(trend.get("rapid_growth_score"), 2)}'
+                "/100"
+            ),
+        )
 
     st.markdown(
 
@@ -3944,13 +4316,8 @@ elif page == "🕰️ Similar Events":
         )
 
 
-        st.dataframe(
-
-            display_similar,
-
-            hide_index=True,
-
-            use_container_width=True,
+        bold_table(
+            display_similar
         )
 
 
@@ -4894,13 +5261,8 @@ else:
     )
 
 
-    st.dataframe(
-
-        glossary,
-
-        hide_index=True,
-
-        use_container_width=True,
+    bold_table(
+        glossary
     )
 
 
