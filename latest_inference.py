@@ -75,6 +75,9 @@ MODEL_PATHS = {
     "upper": MODELS / "deployment_upper_90_model.joblib",
     "features": MODELS / "core_model_features.joblib",
 }
+FROZEN_INDEX_REFERENCE = (
+    MODELS / "frozen_research_index_reference.csv"
+)
 
 FROZEN_REFERENCE_CUTOFF = pd.Timestamp("2026-08-14 10:00:00")
 MAX_FORECAST_GAP_HOURS = 48.0
@@ -174,6 +177,7 @@ def require_files():
         SITUATION_CLEAN, WEATHER_CLEAN, RIVER_CLEAN,
         RIVER_STATIONS, LANDSLIDE_CLEAN, LANDSLIDE_AREAS,
         ANALYTICAL_SCOPE,
+        FROZEN_INDEX_REFERENCE,
         *MODEL_PATHS.values(),
     ]
     missing = [str(p.relative_to(ROOT)) for p in required if not p.exists()]
@@ -3895,18 +3899,41 @@ def research_index_band(score):
 
 
 def build_research_indices(feature_df, refined_trend, pred):
-    # Preserve the frozen all-labelled deployment reference.
-    reference = feature_df[
-        (feature_df["availability_datetime"] < FROZEN_REFERENCE_CUTOFF)
-        & feature_df["valid_next_period_pair"]
-    ].copy()
+    reference = pd.read_csv(
+        FROZEN_INDEX_REFERENCE,
+        parse_dates=["availability_datetime"],
+    )
 
-    # Strong parity check with the final notebook.
+    required_reference_columns = [
+        "availability_datetime",
+        "affected_people",
+        "target_next_affected_people",
+        "people_in_safety_centres",
+        "target_next_people_in_safety_centres",
+    ]
+
+    missing_columns = [
+        col
+        for col in required_reference_columns
+        if col not in reference.columns
+    ]
+
+    if missing_columns:
+        raise RuntimeError(
+            "Frozen research-index reference is missing columns: "
+            + ", ".join(missing_columns)
+        )
+
     if len(reference) != 1281:
         raise RuntimeError(
-            f"Frozen labelled reference has {len(reference)} rows; "
-            "expected 1281. Safe stop prevents changing the index scale."
+            f"Frozen research-index reference has {len(reference)} rows; "
+            "expected 1281."
         )
+
+    print(
+        "Frozen research-index reference rows:",
+        len(reference)
+    )
 
     latest = pred["latest"]
 
