@@ -11,144 +11,140 @@
     ]
   },
   "current_snapshot": {
-    "snapshot_datetime": "2026-09-24 10:00:00",
+    "snapshot_datetime": "2026-09-27 10:00:00",
     "forecast_definition": "Next eligible DMC Situation Report within a maximum 48-hour gap",
     "geographic_scope": "Sri Lanka - national",
     "reported_hazards": [
-      "Flood",
-      "Landslide",
-      "Heavy Rain",
-      "Strong Wind",
-      "Lightning"
+      "Other"
     ],
-    "current_affected_people": 2402.0,
-    "predicted_next_affected_people": 2502.5753396187474,
-    "predicted_change": 100.5753396187474,
-    "predicted_affected_change": 100.5753396187474,
-    "prediction_interval_lower": 407.07441108425337,
-    "prediction_interval_upper": 7688.449411423889,
-    "lower_90": 407.07441108425337,
-    "upper_90": 7688.449411423889,
+    "current_affected_people": 165370.0,
+    "predicted_next_affected_people": 165378.0942911494,
+    "predicted_change": 8.094291149393609,
+    "predicted_affected_change": 8.094291149393609,
+    "prediction_interval_lower": 132219.32094129943,
+    "prediction_interval_upper": 172182.9996826261,
+    "lower_90": 132219.32094129943,
+    "upper_90": 172182.9996826261,
     "prediction_interval_90": {
-      "lower": 407.07441108425337,
-      "upper": 7688.449411423889
+      "lower": 132219.32094129943,
+      "upper": 172182.9996826261
     },
     "prediction_interval_label": "90% model-based prediction interval",
-    "current_safety_population": 97.0,
-    "safety_use_probability": 0.9421995497153639,
-    "safety_use_prediction": 1,
-    "predicted_next_safety_population": 104.66118443892682,
-    "experimental_escalation_risk": "Critical",
+    "current_safety_population": 0.0,
+    "safety_use_probability": 0.1970617987947076,
+    "safety_use_prediction": 0,
+    "predicted_next_safety_population": 0.0,
+    "experimental_escalation_risk": "Low",
     "risk_probabilities": {
-      "Critical": 0.5863212050445054,
-      "High": 0.06745974421045733,
-      "Low": 0.043490225024194,
-      "Moderate": 0.3027288257208433
+      "Critical": 0.3355442514398245,
+      "High": 0.022546162013973574,
+      "Low": 0.4201929866977394,
+      "Moderate": 0.2217165998484625
     },
     "hazard_flags": {
-      "flood": 1,
-      "landslide": 1,
-      "heavy_rain": 1
+      "flood": 0,
+      "landslide": 0,
+      "heavy_rain": 0
     },
     "important_note": "Human-impact and safety-demand forecasts are national multi-hazard forecasts. They must not be interpreted as Flood-only, Landslide-only, or district-level forecasts."
   },
   "research_context": {
-    "snapshot_datetime": "2026-09-24 10:00:00",
+    "snapshot_datetime": "2026-09-27 10:00:00",
     "hazard_context": {
       "flood_context_score": 100.0,
-      "weather_context_score": 66.66666666666666,
+      "weather_context_score": 0.0,
       "landslide_context_score": 100.0,
-      "combined_context_score": 88.88888888888887,
-      "combined_hazard_context_score": 88.88888888888887
+      "combined_context_score": 66.66666666666667,
+      "combined_hazard_context_score": 66.66666666666667
     },
     "trend": {
-      "trend": "Increasing",
-      "change_from_previous": 744.0,
-      "rapid_growth_score": 54.54545454545454,
-      "monitoring_status": "Normal Increase"
+      "trend": "Insufficient Previous Context",
+      "change_from_previous": null,
+      "rapid_growth_score": 0.0,
+      "monitoring_status": "Gap / No Comparable Previous Report"
     },
     "DRPI": {
-      "score": 61.67924133151987,
-      "band": "High",
+      "score": 44.543898473812746,
+      "band": "Moderate",
       "components": {
-        "Current Human Impact": 57.61124121779859,
-        "Predicted Impact Growth": 44.587155963302756,
-        "Predicted Safety Demand": 62.76346604215457,
-        "Hazard Context": 88.88888888888887,
-        "Rapid Growth": 54.54545454545454
+        "Current Human Impact": 88.36846213895394,
+        "Predicted Impact Growth": 14.678899082568808,
+        "Predicted Safety Demand": 53.00546448087432,
+        "Hazard Context": 66.66666666666667,
+        "Rapid Growth": 0.0
       },
       "note": "Research-derived FloodImpact-LK priority indicator; not an official warning."
     },
     "SCPI": {
-      "score": 62.664703978954684,
-      "band": "High",
+      "score": 38.492367904075266,
+      "band": "Moderate",
       "components": {
-        "Current Safety Population": 62.451209992193604,
-        "Forecast Safety Population": 62.76346604215457,
-        "Safety-Use Probability": 94.2199549715364,
-        "Predicted Safety Growth": 5.0,
-        "Hazard Context": 88.88888888888887
+        "Current Safety Population": 53.08352849336456,
+        "Forecast Safety Population": 53.00546448087432,
+        "Safety-Use Probability": 19.70617987947076,
+        "Predicted Safety Growth": 0.0,
+        "Hazard Context": 66.66666666666667
       },
       "note": "Research-derived relative safety-demand pressure indicator. It does not represent actual safety-centre capacity utilization."
     },
     "freshness": {
       "river_age_hours": 0.5,
       "river_status": "Current",
-      "river_latest_datetime": "2026-09-24T09:30:00",
+      "river_latest_datetime": "2026-09-27T09:30:00",
       "river_station_count": 39,
-      "river_alert_flood_stations": 9,
-      "landslide_age_hours": 6.0,
+      "river_alert_flood_stations": 4,
+      "landslide_age_hours": 18.0,
       "landslide_status": "Current",
-      "landslide_latest_datetime": "2026-09-24T04:00:00"
+      "landslide_latest_datetime": "2026-09-26T16:00:00"
     }
   },
   "similar_events": {
-    "query_datetime": "2026-09-24 10:00:00",
+    "query_datetime": "2026-09-27 10:00:00",
     "events": [
       {
-        "historical_datetime": "2023-10-08T06:00:00",
-        "similarity_score": 0.2729580277398704,
-        "affected_people": 54440.0,
-        "safety_population": 781.0,
-        "next_affected_people": 71320.0,
-        "next_safety_population": 1910.0,
+        "historical_datetime": "2024-08-19T09:00:00",
+        "similarity_score": 0.21663800352116658,
+        "affected_people": 27858.0,
+        "safety_population": 17.0,
+        "next_affected_people": 30136.0,
+        "next_safety_population": 0.0,
+        "escalation_risk": "High"
+      },
+      {
+        "historical_datetime": "2024-08-20T09:00:00",
+        "similarity_score": 0.19578141978944485,
+        "affected_people": 30136.0,
+        "safety_population": 0.0,
+        "next_affected_people": 30424.0,
+        "next_safety_population": 0.0,
+        "escalation_risk": "High"
+      },
+      {
+        "historical_datetime": "2023-09-05T06:00:00",
+        "similarity_score": 0.19447425613911085,
+        "affected_people": 6049.0,
+        "safety_population": 0.0,
+        "next_affected_people": 5806.0,
+        "next_safety_population": 0.0,
+        "escalation_risk": "Low"
+      },
+      {
+        "historical_datetime": "2025-09-27T09:00:00",
+        "similarity_score": 0.189598375555911,
+        "affected_people": 2179.0,
+        "safety_population": 0.0,
+        "next_affected_people": 1976.0,
+        "next_safety_population": 0.0,
+        "escalation_risk": "Low"
+      },
+      {
+        "historical_datetime": "2023-10-02T06:00:00",
+        "similarity_score": 0.1837543140518767,
+        "affected_people": 15496.0,
+        "safety_population": 147.0,
+        "next_affected_people": 25863.0,
+        "next_safety_population": 124.0,
         "escalation_risk": "Critical"
-      },
-      {
-        "historical_datetime": "2023-10-15T09:00:00",
-        "similarity_score": 0.26832665602798067,
-        "affected_people": 8974.0,
-        "safety_population": 845.0,
-        "next_affected_people": 8869.0,
-        "next_safety_population": 897.0,
-        "escalation_risk": "Low"
-      },
-      {
-        "historical_datetime": "2023-10-10T06:00:00",
-        "similarity_score": 0.26348658316611023,
-        "affected_people": 46060.0,
-        "safety_population": 3455.0,
-        "next_affected_people": 20957.0,
-        "next_safety_population": 1056.0,
-        "escalation_risk": "Low"
-      },
-      {
-        "historical_datetime": "2023-12-05T09:00:00",
-        "similarity_score": 0.2496052186389952,
-        "affected_people": 454.0,
-        "safety_population": 621.0,
-        "next_affected_people": 169.0,
-        "next_safety_population": 589.0,
-        "escalation_risk": "Low"
-      },
-      {
-        "historical_datetime": "2023-10-11T06:00:00",
-        "similarity_score": 0.24656986091468294,
-        "affected_people": 20957.0,
-        "safety_population": 1056.0,
-        "next_affected_people": 19328.0,
-        "next_safety_population": 1023.0,
-        "escalation_risk": "Low"
       }
     ],
     "note": "Similarity is derived from transformed feature-space distance; it is not a probability or forecast confidence."
@@ -156,74 +152,74 @@
   "explainability": {
     "current_deployment_top_contributors": [
       {
-        "feature": "landslide_districts_at_risk",
-        "feature_value": 11.0,
-        "shap_value": 1.2198780477047846,
-        "abs_shap": 1.2198780477047846,
-        "direction": "upward"
-      },
-      {
         "feature": "landslide_level2_districts",
-        "feature_value": 6.0,
-        "shap_value": 1.2141106953230014,
-        "abs_shap": 1.2141106953230014,
-        "direction": "upward"
-      },
-      {
-        "feature": "latest_landslide_age_hours",
-        "feature_value": 6.0,
-        "shap_value": 0.761488377294252,
-        "abs_shap": 0.761488377294252,
+        "feature_value": 5.0,
+        "shap_value": 1.2789883772046133,
+        "abs_shap": 1.2789883772046133,
         "direction": "upward"
       },
       {
         "feature": "prev_people_in_safety_centres",
-        "feature_value": 94.0,
-        "shap_value": 0.5541987036966655,
-        "abs_shap": 0.5541987036966655,
+        "feature_value": 0.0,
+        "shap_value": 0.5067930753248535,
+        "abs_shap": 0.5067930753248535,
         "direction": "upward"
       },
       {
         "feature": "landslide_level1_districts",
-        "feature_value": 9.0,
-        "shap_value": 0.5197474596654499,
-        "abs_shap": 0.5197474596654499,
+        "feature_value": 8.0,
+        "shap_value": 0.34266288342064505,
+        "abs_shap": 0.34266288342064505,
         "direction": "upward"
       },
       {
-        "feature": "dayofyear_sin",
-        "feature_value": -0.9928872135356962,
-        "shap_value": -0.4340233391837353,
-        "abs_shap": 0.4340233391837353,
+        "feature": "report_dayofweek",
+        "feature_value": 6.0,
+        "shap_value": -0.29464174517780717,
+        "abs_shap": 0.29464174517780717,
+        "direction": "downward"
+      },
+      {
+        "feature": "landslide_level3_districts",
+        "feature_value": 2.0,
+        "shap_value": 0.2245106416583506,
+        "abs_shap": 0.2245106416583506,
+        "direction": "upward"
+      },
+      {
+        "feature": "latest_landslide_age_hours",
+        "feature_value": 18.0,
+        "shap_value": -0.16944806971736467,
+        "abs_shap": 0.16944806971736467,
         "direction": "downward"
       },
       {
         "feature": "report_hour",
         "feature_value": 10.0,
-        "shap_value": 0.3889980331648303,
-        "abs_shap": 0.3889980331648303,
+        "shap_value": 0.11004760541967824,
+        "abs_shap": 0.11004760541967824,
         "direction": "upward"
       },
       {
-        "feature": "landslide_level3_districts",
-        "feature_value": 2.0,
-        "shap_value": 0.23388420747267963,
-        "abs_shap": 0.23388420747267963,
+        "feature": "people_in_safety_centres",
+        "feature_value": 0.0,
+        "shap_value": 0.09628474908731,
+        "abs_shap": 0.09628474908731,
         "direction": "upward"
       },
       {
-        "feature": "weather_depression_24h",
-        "feature_value": 1.0,
-        "shap_value": -0.14589305140166972,
-        "abs_shap": 0.14589305140166972,
+        "feature": "weather_heavy_rain_24h",
+        "feature_value": 0.0,
+        "shap_value": -0.08026341978717982,
+        "abs_shap": 0.08026341978717982,
         "direction": "downward"
       },
       {
-        "feature": "affected_families",
-        "feature_value": 648.0,
-        "shap_value": -0.10979491154674494,
-        "abs_shap": 0.10979491154674494,
-        "direction": "downward"
+        "feature": "affected_people_change_from_prev",
+        "feature_value": 0.0,
+        "shap_value": 0.08002917171652137,
+        "abs_shap": 0.08002917171652137,
+        "direction": "upward"
       }
     ],
     "global_test_importance": [
@@ -334,6 +330,6 @@
       "interpretation": "The nominal 90% interval achieved 80.67% empirical coverage on the held-out test period."
     }
   },
-  "generated_at": "2026-09-24T19:51:04.796121+05:30",
+  "generated_at": "2026-09-29T16:47:26.724699+05:30",
   "update_note": "Official-report-driven near-real-time update using frozen saved deployment models. No predictive model retraining was performed."
 }

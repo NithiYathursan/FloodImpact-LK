@@ -1,79 +1,69 @@
 {
-  "snapshot_datetime": "2026-09-24 10:00:00",
-  "explanation_target": "Predicted signed-log change in affected population",
-  "base_value": 0.6221461842966669,
-  "model_transformed_prediction": 4.620800785395126,
-  "top_contributors": [
-    {
-      "feature": "landslide_districts_at_risk",
-      "feature_value": 11.0,
-      "shap_value": 1.2198780477047846,
-      "abs_shap": 1.2198780477047846,
-      "direction": "upward"
-    },
-    {
-      "feature": "landslide_level2_districts",
-      "feature_value": 6.0,
-      "shap_value": 1.2141106953230014,
-      "abs_shap": 1.2141106953230014,
-      "direction": "upward"
-    },
-    {
-      "feature": "latest_landslide_age_hours",
-      "feature_value": 6.0,
-      "shap_value": 0.761488377294252,
-      "abs_shap": 0.761488377294252,
-      "direction": "upward"
-    },
-    {
-      "feature": "prev_people_in_safety_centres",
-      "feature_value": 94.0,
-      "shap_value": 0.5541987036966655,
-      "abs_shap": 0.5541987036966655,
-      "direction": "upward"
-    },
-    {
-      "feature": "landslide_level1_districts",
-      "feature_value": 9.0,
-      "shap_value": 0.5197474596654499,
-      "abs_shap": 0.5197474596654499,
-      "direction": "upward"
-    },
-    {
-      "feature": "dayofyear_sin",
-      "feature_value": -0.9928872135356962,
-      "shap_value": -0.4340233391837353,
-      "abs_shap": 0.4340233391837353,
-      "direction": "downward"
-    },
-    {
-      "feature": "report_hour",
-      "feature_value": 10.0,
-      "shap_value": 0.3889980331648303,
-      "abs_shap": 0.3889980331648303,
-      "direction": "upward"
-    },
-    {
-      "feature": "landslide_level3_districts",
-      "feature_value": 2.0,
-      "shap_value": 0.23388420747267963,
-      "abs_shap": 0.23388420747267963,
-      "direction": "upward"
-    },
-    {
-      "feature": "weather_depression_24h",
-      "feature_value": 1.0,
-      "shap_value": -0.14589305140166972,
-      "abs_shap": 0.14589305140166972,
-      "direction": "downward"
-    },
-    {
-      "feature": "affected_families",
-      "feature_value": 648.0,
-      "shap_value": -0.10979491154674494,
-      "abs_shap": 0.10979491154674494,
-      "direction": "downward"
-    }
-  ],
-  "note": "SHAP explains feature contributions to the modelled signed-log change; it does not represent causal effects."
+    "snapshot_datetime": "NaT",
+    "explanation_target": "Predicted signed-log change in affected people",
+    "base_value": 0.8837339440141695,
+    "model_transformed_prediction": 0.5861256531395899,
+    "top_contributors": [
+        {
+            "feature": "affected_families_change_from_prev",
+            "feature_value": 0.0,
+            "shap_value": -0.11022099200572058,
+            "direction": "Pushes predicted change downward"
+        },
+        {
+            "feature": "report_hour",
+            "feature_value": 10.0,
+            "shap_value": 0.10313846895636912,
+            "direction": "Pushes predicted change upward"
+        },
+        {
+            "feature": "landslide_level1_districts",
+            "feature_value": 0.0,
+            "shap_value": -0.07735195632961049,
+            "direction": "Pushes predicted change downward"
+        },
+        {
+            "feature": "safety_population_change_from_prev",
+            "feature_value": 0.0,
+            "shap_value": -0.06161457338781865,
+            "direction": "Pushes predicted change downward"
+        },
+        {
+            "feature": "latest_landslide_age_hours",
+            "feature_value": 281.0,
+            "shap_value": -0.06035786429672229,
+            "direction": "Pushes predicted change downward"
+        },
+        {
+            "feature": "latest_weather_age_hours",
+            "feature_value": 2.0,
+            "shap_value": -0.05595493374568924,
+            "direction": "Pushes predicted change downward"
+        },
+        {
+            "feature": "prev_people_in_safety_centres",
+            "feature_value": 58.0,
+            "shap_value": 0.0507839883370826,
+            "direction": "Pushes predicted change upward"
+        },
+        {
+            "feature": "month_cos",
+            "feature_value": -1.8369701987210297e-16,
+            "shap_value": 0.043940983058090945,
+            "direction": "Pushes predicted change upward"
+        },
+        {
+            "feature": "affected_people_log_change_from_prev",
+            "feature_value": 0.0,
+            "shap_value": -0.04391653446965821,
+            "direction": "Pushes predicted change downward"
+        },
+        {
+            "feature": "previous_report_gap_hours",
+            "feature_value": 15.0,
+            "shap_value": -0.03912092146813447,
+            "direction": "Pushes predicted change downward"
+        }
+    ],
+    "note": "SHAP values explain model contribution to the predicted change. They are not causal effects."
 }
