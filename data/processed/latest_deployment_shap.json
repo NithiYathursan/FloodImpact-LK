@@ -1,69 +1,79 @@
 {
-    "snapshot_datetime": "NaT",
-    "explanation_target": "Predicted signed-log change in affected people",
-    "base_value": 0.8837339440141695,
-    "model_transformed_prediction": 0.5861256531395899,
-    "top_contributors": [
-        {
-            "feature": "affected_families_change_from_prev",
-            "feature_value": 0.0,
-            "shap_value": -0.11022099200572058,
-            "direction": "Pushes predicted change downward"
-        },
-        {
-            "feature": "report_hour",
-            "feature_value": 10.0,
-            "shap_value": 0.10313846895636912,
-            "direction": "Pushes predicted change upward"
-        },
-        {
-            "feature": "landslide_level1_districts",
-            "feature_value": 0.0,
-            "shap_value": -0.07735195632961049,
-            "direction": "Pushes predicted change downward"
-        },
-        {
-            "feature": "safety_population_change_from_prev",
-            "feature_value": 0.0,
-            "shap_value": -0.06161457338781865,
-            "direction": "Pushes predicted change downward"
-        },
-        {
-            "feature": "latest_landslide_age_hours",
-            "feature_value": 281.0,
-            "shap_value": -0.06035786429672229,
-            "direction": "Pushes predicted change downward"
-        },
-        {
-            "feature": "latest_weather_age_hours",
-            "feature_value": 2.0,
-            "shap_value": -0.05595493374568924,
-            "direction": "Pushes predicted change downward"
-        },
-        {
-            "feature": "prev_people_in_safety_centres",
-            "feature_value": 58.0,
-            "shap_value": 0.0507839883370826,
-            "direction": "Pushes predicted change upward"
-        },
-        {
-            "feature": "month_cos",
-            "feature_value": -1.8369701987210297e-16,
-            "shap_value": 0.043940983058090945,
-            "direction": "Pushes predicted change upward"
-        },
-        {
-            "feature": "affected_people_log_change_from_prev",
-            "feature_value": 0.0,
-            "shap_value": -0.04391653446965821,
-            "direction": "Pushes predicted change downward"
-        },
-        {
-            "feature": "previous_report_gap_hours",
-            "feature_value": 15.0,
-            "shap_value": -0.03912092146813447,
-            "direction": "Pushes predicted change downward"
-        }
-    ],
-    "note": "SHAP values explain model contribution to the predicted change. They are not causal effects."
+  "snapshot_datetime": "2026-09-30 10:00:00",
+  "explanation_target": "Predicted signed-log change in affected population",
+  "base_value": 0.6221461842966669,
+  "model_transformed_prediction": -0.05838786422125598,
+  "top_contributors": [
+    {
+      "feature": "prev_people_in_safety_centres",
+      "feature_value": 46.0,
+      "shap_value": 0.22933743440110793,
+      "abs_shap": 0.22933743440110793,
+      "direction": "upward"
+    },
+    {
+      "feature": "current_heavy_rain_flag",
+      "feature_value": 1.0,
+      "shap_value": -0.157871370931473,
+      "abs_shap": 0.157871370931473,
+      "direction": "downward"
+    },
+    {
+      "feature": "landslide_districts_at_risk",
+      "feature_value": 0.0,
+      "shap_value": -0.11691086557440467,
+      "abs_shap": 0.11691086557440467,
+      "direction": "downward"
+    },
+    {
+      "feature": "affected_families",
+      "feature_value": 1120.0,
+      "shap_value": -0.1162832112157214,
+      "abs_shap": 0.1162832112157214,
+      "direction": "downward"
+    },
+    {
+      "feature": "latest_landslide_age_hours",
+      "feature_value": 65.5,
+      "shap_value": -0.11461033265782124,
+      "abs_shap": 0.11461033265782124,
+      "direction": "downward"
+    },
+    {
+      "feature": "landslide_level2_districts",
+      "feature_value": 0.0,
+      "shap_value": -0.11433218414888015,
+      "abs_shap": 0.11433218414888015,
+      "direction": "downward"
+    },
+    {
+      "feature": "people_in_safety_centres",
+      "feature_value": 46.0,
+      "shap_value": 0.10460354805267001,
+      "abs_shap": 0.10460354805267001,
+      "direction": "upward"
+    },
+    {
+      "feature": "log_current_affected_families",
+      "feature_value": 7.02197642307216,
+      "shap_value": -0.10243058650811088,
+      "abs_shap": 0.10243058650811088,
+      "direction": "downward"
+    },
+    {
+      "feature": "landslide_level1_districts",
+      "feature_value": 0.0,
+      "shap_value": -0.09592835485356485,
+      "abs_shap": 0.09592835485356485,
+      "direction": "downward"
+    },
+    {
+      "feature": "prev_safety_centres",
+      "feature_value": 2.0,
+      "shap_value": 0.06002073826025243,
+      "abs_shap": 0.06002073826025243,
+      "direction": "upward"
+    }
+  ],
+  "note": "SHAP explains feature contributions to the modelled signed-log change; it does not represent causal effects."
 }

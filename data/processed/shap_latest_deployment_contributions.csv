@@ -1,60 +1,59 @@
 feature,feature_value,shap_value,abs_shap,direction
-affected_families_change_from_prev,0.0,-0.11022099200572058,0.11022099200572058,Pushes predicted change downward
-report_hour,10.0,0.10313846895636912,0.10313846895636912,Pushes predicted change upward
-landslide_level1_districts,0.0,-0.07735195632961049,0.07735195632961049,Pushes predicted change downward
-safety_population_change_from_prev,0.0,-0.06161457338781865,0.06161457338781865,Pushes predicted change downward
-latest_landslide_age_hours,281.0,-0.06035786429672229,0.06035786429672229,Pushes predicted change downward
-latest_weather_age_hours,2.0,-0.05595493374568924,0.05595493374568924,Pushes predicted change downward
-prev_people_in_safety_centres,58.0,0.0507839883370826,0.0507839883370826,Pushes predicted change upward
-month_cos,-1.8369701987210297e-16,0.043940983058090945,0.043940983058090945,Pushes predicted change upward
-affected_people_log_change_from_prev,0.0,-0.04391653446965821,0.04391653446965821,Pushes predicted change downward
-previous_report_gap_hours,15.0,-0.03912092146813447,0.03912092146813447,Pushes predicted change downward
-report_dayofweek,3.0,0.0329998128121686,0.0329998128121686,Pushes predicted change upward
-log_current_people_in_safety_centres,0.0,-0.03272202766719279,0.03272202766719279,Pushes predicted change downward
-month_sin,-2.4492935982947064e-16,0.026232161557180396,0.026232161557180396,Pushes predicted change upward
-weather_max_wind_24h,50.0,-0.021156359449805304,0.021156359449805304,Pushes predicted change downward
-prev_safety_centres,1.0,0.019976700867229805,0.019976700867229805,Pushes predicted change upward
-landslide_level3_districts,0.0,-0.017618819412094654,0.017618819412094654,Pushes predicted change downward
-current_heavy_rain_flag,0.0,0.016634998837541937,0.016634998837541937,Pushes predicted change upward
-log_current_affected_families,10.821596630217067,0.015649244188110076,0.015649244188110076,Pushes predicted change upward
-weather_reports_24h,0.0,-0.012792774688525837,0.012792774688525837,Pushes predicted change downward
-people_in_safety_centres,0.0,-0.012351525024988569,0.012351525024988569,Pushes predicted change downward
-missingindicator_weather_max_rainfall_threshold_24h,1.0,-0.011425706851418891,0.011425706851418891,Pushes predicted change downward
-landslide_districts_at_risk,0.0,-0.009490969160101885,0.009490969160101885,Pushes predicted change downward
-weather_max_rainfall_threshold_24h,75.0,-0.008323275142498485,0.008323275142498485,Pushes predicted change downward
-affected_families,50090.0,0.0075017730880009735,0.0075017730880009735,Pushes predicted change upward
-safety_population_log_change_from_prev,0.0,-0.007357255923438006,0.007357255923438006,Pushes predicted change downward
-prev_affected_families,3046.0,0.00723992307323761,0.00723992307323761,Pushes predicted change upward
-weather_heavy_rain_24h,0.0,-0.007200884839364832,0.007200884839364832,Pushes predicted change downward
-safety_centres,0.0,-0.007116858048579393,0.007116858048579393,Pushes predicted change downward
-dayofyear_cos,-0.033323525711631344,-0.0070003716752126185,0.0070003716752126185,Pushes predicted change downward
-weather_max_warning_level_24h,0.0,-0.005805901861725779,0.005805901861725779,Pushes predicted change downward
-missingindicator_weather_max_wind_24h,1.0,-0.005350148938582435,0.005350148938582435,Pushes predicted change downward
-log_current_safety_centres,0.0,-0.004086172162291501,0.004086172162291501,Pushes predicted change downward
-weather_thunderstorm_24h,0.0,-0.0033182190906931312,0.0033182190906931312,Pushes predicted change downward
-weather_depression_24h,0.0,-0.0031545747609124735,0.0031545747609124735,Pushes predicted change downward
-log_current_affected_people,12.015946713671976,0.002894892710888157,0.002894892710888157,Pushes predicted change upward
-affected_people_change_from_prev,0.0,-0.0026092671692806253,0.0026092671692806253,Pushes predicted change downward
-dayofyear_sin,-0.06553537876991389,0.0023096786787409613,0.0023096786787409613,Pushes predicted change upward
-prev_affected_people,10648.0,-0.0013725028503923408,0.0013725028503923408,Pushes predicted change downward
-weather_strong_wind_24h,0.0,0.0007865874863889907,0.0007865874863889907,Pushes predicted change upward
-landslide_level2_districts,0.0,0.0005475856229433424,0.0005475856229433424,Pushes predicted change upward
-affected_people,165370.0,0.0005463002718995979,0.0005463002718995979,Pushes predicted change upward
-weather_low_pressure_24h,0.0,0.0,0.0,Neutral
-weather_cyclone_24h,0.0,0.0,0.0,Neutral
-current_landslide_flag,0.0,0.0,0.0,Neutral
-landslide_max_warning_level,0.0,0.0,0.0,Neutral
-landslide_active_warning,0.0,0.0,0.0,Neutral
-current_flood_flag,0.0,0.0,0.0,Neutral
-previous_context_valid,0.0,0.0,0.0,Neutral
-missingindicator_latest_landslide_age_hours,1.0,0.0,0.0,Neutral
-missingindicator_previous_report_gap_hours,1.0,0.0,0.0,Neutral
-missingindicator_prev_affected_people,1.0,0.0,0.0,Neutral
-missingindicator_prev_affected_families,1.0,0.0,0.0,Neutral
-missingindicator_prev_safety_centres,1.0,0.0,0.0,Neutral
-missingindicator_prev_people_in_safety_centres,1.0,0.0,0.0,Neutral
-missingindicator_affected_people_change_from_prev,1.0,0.0,0.0,Neutral
-missingindicator_affected_families_change_from_prev,1.0,0.0,0.0,Neutral
-missingindicator_safety_population_change_from_prev,1.0,0.0,0.0,Neutral
-missingindicator_affected_people_log_change_from_prev,1.0,0.0,0.0,Neutral
-missingindicator_safety_population_log_change_from_prev,1.0,0.0,0.0,Neutral
+prev_people_in_safety_centres,46.0,0.22933743440110793,0.22933743440110793,upward
+current_heavy_rain_flag,1.0,-0.157871370931473,0.157871370931473,downward
+landslide_districts_at_risk,0.0,-0.11691086557440467,0.11691086557440467,downward
+affected_families,1120.0,-0.1162832112157214,0.1162832112157214,downward
+latest_landslide_age_hours,65.5,-0.11461033265782124,0.11461033265782124,downward
+landslide_level2_districts,0.0,-0.11433218414888015,0.11433218414888015,downward
+people_in_safety_centres,46.0,0.10460354805267001,0.10460354805267001,upward
+log_current_affected_families,7.02197642307216,-0.10243058650811088,0.10243058650811088,downward
+landslide_level1_districts,0.0,-0.09592835485356485,0.09592835485356485,downward
+prev_safety_centres,2.0,0.06002073826025243,0.06002073826025243,upward
+affected_people_change_from_prev,541.0,-0.059717799446078405,0.059717799446078405,downward
+dayofyear_cos,-0.016126573270657762,-0.05919999426597222,0.05919999426597222,downward
+weather_heavy_rain_24h,1.0,0.05719305180022305,0.05719305180022305,upward
+log_current_people_in_safety_centres,3.8501476017100584,0.05243000198257394,0.05243000198257394,upward
+weather_reports_24h,4.0,-0.050345733359877645,0.050345733359877645,downward
+report_hour,10.0,0.049851951914356096,0.049851951914356096,upward
+weather_max_warning_level_24h,2.0,-0.04457735068048889,0.04457735068048889,downward
+missingindicator_weather_max_rainfall_threshold_24h,0.0,0.043788508370071644,0.043788508370071644,upward
+previous_report_gap_hours,24.0,-0.04283541559216111,0.04283541559216111,downward
+latest_weather_age_hours,4.5,-0.038568312750878006,0.038568312750878006,downward
+weather_max_rainfall_threshold_24h,50.0,-0.03746408213842549,0.03746408213842549,downward
+log_current_safety_centres,1.0986122886681098,-0.03171810798382438,0.03171810798382438,downward
+safety_population_log_change_from_prev,0.0,-0.02328939373683735,0.02328939373683735,downward
+affected_families_change_from_prev,158.0,-0.019358806427234504,0.019358806427234504,downward
+dayofyear_sin,-0.9998699583618592,-0.014297261232275007,0.014297261232275007,downward
+prev_affected_people,3569.0,-0.01154439115790972,0.01154439115790972,downward
+prev_affected_families,962.0,-0.011407587765034368,0.011407587765034368,downward
+landslide_level3_districts,0.0,-0.011005203611531282,0.011005203611531282,downward
+weather_depression_24h,0.0,0.00924406538716929,0.00924406538716929,upward
+affected_people,4110.0,-0.007341736139018944,0.007341736139018944,downward
+log_current_affected_people,8.321421586897879,-0.005917212472978366,0.005917212472978366,downward
+month_cos,-1.8369701987210297e-16,-0.0045953447835405834,0.0045953447835405834,downward
+weather_cyclone_24h,0.0,-0.0041930957646531646,0.0041930957646531646,downward
+safety_centres,2.0,0.0034082829649450027,0.0034082829649450027,upward
+safety_population_change_from_prev,0.0,0.0019672279915466193,0.0019672279915466193,upward
+affected_people_log_change_from_prev,0.14110071212419406,0.0013369073230992121,0.0013369073230992121,upward
+weather_thunderstorm_24h,1.0,0.0009400144083196345,0.0009400144083196345,upward
+report_dayofweek,2.0,0.0006393535327599926,0.0006393535327599926,upward
+month_sin,-1.0,0.00044860029167808333,0.00044860029167808333,upward
+weather_low_pressure_24h,0.0,0.0,0.0,neutral
+weather_strong_wind_24h,0.0,0.0,0.0,neutral
+weather_max_wind_24h,45.0,0.0,0.0,neutral
+current_landslide_flag,1.0,0.0,0.0,neutral
+current_flood_flag,1.0,0.0,0.0,neutral
+landslide_max_warning_level,0.0,0.0,0.0,neutral
+landslide_active_warning,0.0,0.0,0.0,neutral
+previous_context_valid,1.0,0.0,0.0,neutral
+missingindicator_weather_max_wind_24h,1.0,0.0,0.0,neutral
+missingindicator_previous_report_gap_hours,0.0,0.0,0.0,neutral
+missingindicator_prev_affected_people,0.0,0.0,0.0,neutral
+missingindicator_prev_affected_families,0.0,0.0,0.0,neutral
+missingindicator_prev_safety_centres,0.0,0.0,0.0,neutral
+missingindicator_prev_people_in_safety_centres,0.0,0.0,0.0,neutral
+missingindicator_affected_people_change_from_prev,0.0,0.0,0.0,neutral
+missingindicator_affected_families_change_from_prev,0.0,0.0,0.0,neutral
+missingindicator_safety_population_change_from_prev,0.0,0.0,0.0,neutral
+missingindicator_affected_people_log_change_from_prev,0.0,0.0,0.0,neutral
+missingindicator_safety_population_log_change_from_prev,0.0,0.0,0.0,neutral
