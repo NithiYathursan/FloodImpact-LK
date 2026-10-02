@@ -680,6 +680,35 @@ st.markdown(
     .bold-data-table td:first-child {
         border-left: 1px solid rgba(128,128,128,0.22);
     }
+    /* =========================================================
+    SIDEBAR SECONDARY BUTTON - LIGHT/DARK MODE FIX
+    ========================================================= */
+
+    [data-testid="stSidebar"] [data-testid="stBaseButton-secondary"] {
+        background: #f7f9fb !important;
+        color: #17384d !important;
+        border: 1px solid #c8d3dc !important;
+        opacity: 1 !important;
+    }
+
+    [data-testid="stSidebar"] [data-testid="stBaseButton-secondary"] *,
+    [data-testid="stSidebar"] [data-testid="stBaseButton-secondary"] p,
+    [data-testid="stSidebar"] [data-testid="stBaseButton-secondary"] span {
+        color: #17384d !important;
+        -webkit-text-fill-color: #17384d !important;
+        opacity: 1 !important;
+        font-weight: 600 !important;
+    }
+
+    [data-testid="stSidebar"] [data-testid="stBaseButton-secondary"]:hover {
+        background: #e8eef3 !important;
+        color: #102f4c !important;
+    }
+
+    [data-testid="stSidebar"] [data-testid="stBaseButton-secondary"]:hover * {
+        color: #102f4c !important;
+        -webkit-text-fill-color: #102f4c !important;
+    }
 
     </style>
     """,

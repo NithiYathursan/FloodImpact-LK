@@ -10,3 +10,6 @@ shap
 joblib
 streamlit
 folium
+PyMuPDF
+geopandas
+altair
