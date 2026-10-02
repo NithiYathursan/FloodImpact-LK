@@ -697,6 +697,7 @@ python -m streamlit run app.py
 The application normally opens at:
 
 http://localhost:8501
+Streamlit Dashboard: https://floodimpact-lk-mxfflfgacnn2mdvdp3pvkm.streamlit.app/
 
 🔄 Check Latest Official Data
 
