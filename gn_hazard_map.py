@@ -45,14 +45,25 @@ def _dsd_key(v):
     # Known wording/spelling variants between NBRO bulletins and
     # the Survey Department administrative layer.
     aliases = {
-        'deltota': 'delthota',
-        'delthota': 'delthota',
-        'gangawata korale': 'gangawata korale',
-        'kandy four gravets and gangawata korale': 'gangawata korale',
-        'kandy four gravets gangawata korale': 'gangawata korale',
-        'pujapitiya': 'poojapitiya',
-        'poojapitiya': 'poojapitiya',
-    }
+    'deltota': 'delthota',
+    'delthota': 'delthota',
+
+    'gangawata korale': 'gangawata korale',
+    'kandy four gravets and gangawata korale': 'gangawata korale',
+    'kandy four gravets gangawata korale': 'gangawata korale',
+
+    'pujapitiya': 'poojapitiya',
+    'poojapitiya': 'poojapitiya',
+
+    'bulathkohupitiya': 'bulathkohipitiya',
+    'bulathkohipitiya': 'bulathkohipitiya',
+
+    'ambanganga korale': 'ambanganga',
+    'ambanganga': 'ambanganga',
+
+    'kuruwita': 'kuruvita',
+    'kuruvita': 'kuruvita',
+}
 
     return aliases.get(key, key)
 
@@ -296,14 +307,7 @@ def _detect_col(columns, names):
 
 
 def current_landslide_dsd_context(snapshot):
-    """Return the latest current NBRO warning independently for each DSD.
 
-    The processed landslide_warning_areas.csv stores one row per warning level
-    and commonly keeps the DSD list inside area_text_raw rather than a separate
-    DSD column. This function expands that list into one row per DSD, then
-    selects the latest record for each district + DSD at/before the dashboard
-    snapshot. A 24-hour freshness rule is retained.
-    """
     if not LANDSLIDE_AREAS.exists():
         return pd.DataFrame()
 
@@ -315,144 +319,149 @@ def current_landslide_dsd_context(snapshot):
     if d.empty:
         return pd.DataFrame()
 
-    snap = pd.to_datetime(snapshot, errors='coerce')
+    snap = pd.to_datetime(
+        snapshot,
+        errors="coerce",
+    )
+
     if pd.isna(snap):
         return pd.DataFrame()
 
-    dc = _detect_col(d.columns, ['district clean', 'district'])
-    sc = _detect_col(d.columns, ['dsd clean', 'dsd'])
-    ac = _detect_col(d.columns, ['area text raw', 'area text', 'location'])
-    lc = _detect_col(
-        d.columns,
-        ['warning level', 'max warning level', 'level'],
-    )
+    required = {
+        "file_name",
+        "district",
+        "warning_level",
+        "area_text_raw",
+    }
 
-    if lc is None:
+    if not required.issubset(d.columns):
         return pd.DataFrame()
 
-    # Reconstruct the real report timestamp. Do not parse numeric issue_time
-    # alone because values such as 1600 would otherwise be interpreted as a
-    # 1970 nanosecond timestamp by pandas.
-    if 'report_datetime' in d.columns:
-        d['report_datetime'] = pd.to_datetime(
-            d['report_datetime'],
-            errors='coerce',
+    # -------------------------------------------------
+    # Use timestamp embedded in the PDF filename.
+    # Example:
+    # landslide_20261005_1600_....pdf
+    # -------------------------------------------------
+
+    d["report_datetime"] = d["file_name"].apply(
+        lambda value: _filename_time(
+            Path(str(value))
         )
-    else:
-        date_col = _detect_col(d.columns, ['report date', 'date'])
-        time_col = _detect_col(d.columns, ['issue time', 'time'])
+    )
 
-        if date_col is None:
-            return pd.DataFrame()
-
-        dates = pd.to_datetime(d[date_col], errors='coerce')
-
-        if time_col is not None:
-            times = (
-                d[time_col]
-                .astype(str)
-                .str.replace(r'\\.0$', '', regex=True)
-                .str.replace(r'\\D', '', regex=True)
-                .str.zfill(4)
-            )
-
-            d['report_datetime'] = pd.to_datetime(
-                dates.dt.strftime('%Y-%m-%d') + ' ' + times,
-                format='%Y-%m-%d %H%M',
-                errors='coerce',
-            )
-        else:
-            d['report_datetime'] = dates
-
+    # Only information available at or before snapshot.
     d = d[
-        d['report_datetime'].notna()
-        & (d['report_datetime'] <= snap)
+        d["report_datetime"].notna()
+        & (d["report_datetime"] <= snap)
     ].copy()
 
     if d.empty:
         return pd.DataFrame()
 
-    d['district'] = (
-        d[dc].astype(str).str.strip()
-        if dc is not None
-        else ''
+    d["district"] = (
+        d["district"]
+        .fillna("")
+        .astype(str)
+        .str.strip()
     )
-    d['level'] = pd.to_numeric(
-        d[lc],
-        errors='coerce',
+
+    d["level"] = pd.to_numeric(
+        d["warning_level"],
+        errors="coerce",
     ).fillna(0)
 
-    # Expand to one row per DSD.
+    # -------------------------------------------------
+    # Expand each NBRO area row into individual DSDs.
+    # -------------------------------------------------
+
     expanded_rows = []
 
     for _, row in d.iterrows():
-        if sc is not None and str(row.get(sc, '')).strip():
-            dsd_names = [str(row.get(sc, '')).strip()]
-        elif ac is not None:
-            dsd_names = _extract_dsds_from_area_text(
-                row.get(ac)
-            )
-        else:
-            dsd_names = []
+
+        dsd_names = _extract_dsds_from_area_text(
+            row["area_text_raw"]
+        )
 
         for dsd_name in dsd_names:
+
             if not dsd_name:
                 continue
 
-            expanded_rows.append({
-                'district': row['district'],
-                'dsd': dsd_name,
-                'level': row['level'],
-                'report_datetime': row['report_datetime'],
-            })
+            expanded_rows.append(
+                {
+                    "district": row["district"],
+                    "dsd": dsd_name,
+                    "level": row["level"],
+                    "report_datetime":
+                        row["report_datetime"],
+                }
+            )
 
     if not expanded_rows:
         return pd.DataFrame()
 
     x = pd.DataFrame(expanded_rows)
-    x['district_key'] = x['district'].map(_norm)
-    x['dsd_key'] = x['dsd'].map(_dsd_key)
 
-    # Keep only plausible non-empty administrative names.
+    x["district_key"] = (
+        x["district"].map(_norm)
+    )
+
+    x["dsd_key"] = (
+        x["dsd"].map(_dsd_key)
+    )
+
     x = x[
-        x['dsd_key'].astype(str).str.len().gt(1)
+        x["dsd_key"]
+        .astype(str)
+        .str.len()
+        .gt(1)
     ].copy()
 
     if x.empty:
         return pd.DataFrame()
 
-    # Latest row independently for each DSD at or before snapshot.
-    x = x.sort_values('report_datetime')
+    # -------------------------------------------------
+    # Latest warning independently for every DSD.
+    # -------------------------------------------------
+
+    x = x.sort_values(
+        "report_datetime"
+    )
+
     latest = (
         x.groupby(
-            ['district_key', 'dsd_key'],
+            ["district_key", "dsd_key"],
             as_index=False,
         )
         .tail(1)
         .copy()
     )
 
-    latest['age_hours'] = (
-        snap - latest['report_datetime']
+    # -------------------------------------------------
+    # Keep only warnings no more than 24 hours old.
+    # -------------------------------------------------
+
+    latest["age_hours"] = (
+        snap
+        - latest["report_datetime"]
     ).dt.total_seconds() / 3600.0
 
     latest = latest[
-        (latest['age_hours'] >= 0)
-        & (latest['age_hours'] <= 24)
+        (latest["age_hours"] >= 0)
+        & (latest["age_hours"] <= 24)
     ].copy()
 
     return latest[
         [
-            'district',
-            'dsd',
-            'level',
-            'report_datetime',
-            'age_hours',
-            'district_key',
-            'dsd_key',
+            "district",
+            "dsd",
+            "level",
+            "report_datetime",
+            "age_hours",
+            "district_key",
+            "dsd_key",
         ]
     ].drop_duplicates()
-
 
 
 def _report_datetime(df):
