@@ -1,5 +1,5 @@
 {
-  "snapshot_datetime": "2026-09-30 10:00:00",
+  "snapshot_datetime": "2026-10-08 10:00:00",
   "explanation_target": "Predicted signed-log change in affected population",
   "base_value": 0.6221461842966669,
   "model_transformed_prediction": -0.05838786422125598,
@@ -20,28 +20,28 @@
     },
     {
       "feature": "landslide_districts_at_risk",
-      "feature_value": 0.0,
+      "feature_value": 5.0,
       "shap_value": -0.11691086557440467,
       "abs_shap": 0.11691086557440467,
       "direction": "downward"
     },
     {
       "feature": "affected_families",
-      "feature_value": 1120.0,
+      "feature_value": 1446.0,
       "shap_value": -0.1162832112157214,
       "abs_shap": 0.1162832112157214,
       "direction": "downward"
     },
     {
       "feature": "latest_landslide_age_hours",
-      "feature_value": 65.5,
+      "feature_value": 15.0,
       "shap_value": -0.11461033265782124,
       "abs_shap": 0.11461033265782124,
       "direction": "downward"
     },
     {
       "feature": "landslide_level2_districts",
-      "feature_value": 0.0,
+      "feature_value": 2.0,
       "shap_value": -0.11433218414888015,
       "abs_shap": 0.11433218414888015,
       "direction": "downward"
@@ -55,24 +55,24 @@
     },
     {
       "feature": "log_current_affected_families",
-      "feature_value": 7.02197642307216,
+      "feature_value": 7.277247726631484,
       "shap_value": -0.10243058650811088,
       "abs_shap": 0.10243058650811088,
       "direction": "downward"
     },
     {
       "feature": "landslide_level1_districts",
-      "feature_value": 0.0,
+      "feature_value": 4.0,
       "shap_value": -0.09592835485356485,
       "abs_shap": 0.09592835485356485,
       "direction": "downward"
     },
     {
-      "feature": "prev_safety_centres",
-      "feature_value": 2.0,
-      "shap_value": 0.06002073826025243,
-      "abs_shap": 0.06002073826025243,
-      "direction": "upward"
+      "feature": "dayofyear_cos",
+      "feature_value": 0.121193461470736,
+      "shap_value": -0.06506232669209193,
+      "abs_shap": 0.06506232669209193,
+      "direction": "downward"
     }
   ],
   "note": "SHAP explains feature contributions to the modelled signed-log change; it does not represent causal effects."

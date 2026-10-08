@@ -4117,3 +4117,8 @@ availability_datetime,affected_people,rapid_growth_score,impact_trend,impact_mon
 2026-09-27 10:00:00,165370.0,,Insufficient Previous Context,Gap / No Comparable Previous Report
 2026-09-29 10:00:00,3569.0,0.0,Decreasing,Decrease
 2026-09-30 10:00:00,4110.0,45.45454545454545,Increasing,Normal Increase
+2026-10-03 10:00:00,4363.0,,Insufficient Previous Context,Gap / No Comparable Previous Report
+2026-10-04 10:00:00,4363.0,0.0,Stable,Stable
+2026-10-05 10:00:00,4363.0,0.0,Stable,Stable
+2026-10-06 10:00:00,4934.0,45.45454545454545,Increasing,Normal Increase
+2026-10-08 10:00:00,5222.0,40.0,Increasing,Normal Increase

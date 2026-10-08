@@ -4359,11 +4359,23 @@ def generate_map(district_df, snapshot, freshness, pred, research, output_path):
     ).add_to(m)
 
     panel = f"""
-    <div style="position:fixed;bottom:20px;left:20px;width:370px;
-    z-index:9999;background:white;border:1px solid #777;border-radius:8px;
-    padding:12px;font-size:12px;line-height:1.45;
-    box-shadow:0 1px 8px rgba(0,0,0,.2)">
+    <div style="
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    width:370px;
+    z-index:9999;
+    background:white;
+    border:1px solid #777;
+    border-radius:8px;
+    padding:12px;
+    font-size:12px;
+    line-height:1.55;
+    box-shadow:0 1px 8px rgba(0,0,0,.2)
+    ">
+
     <b>FloodImpact-LK hazard context</b><br>
+
     Snapshot: {snapshot}<br>
     National current affected: {pred["current_affected"]:,.0f}<br>
     National next estimate: {pred["predicted_affected"]:,.0f}<br>
@@ -4372,9 +4384,61 @@ def generate_map(district_df, snapshot, freshness, pred, research, output_path):
     SCPI: {research["SCPI"]:.2f}/100<br>
     River data: {freshness["river_status"]}<br>
     Landslide data: {freshness["landslide_status"]}<br>
-    <hr style="margin:6px 0">
-    District colours represent hazard/warning context only.
+
+    <hr style="margin:7px 0">
+
+    <b>Landslide warning context</b><br>
+
+    <span style="
+    display:inline-block;
+    width:12px;
+    height:12px;
+    background:#b7e4c7;
+    border:1px solid #555;
+    "></span>
+    &nbsp;No active warning in current bulletin<br>
+
+    <span style="
+    display:inline-block;
+    width:12px;
+    height:12px;
+    background:#f9e547;
+    border:1px solid #555;
+    "></span>
+    &nbsp;Level 1 — Yellow / Watch<br>
+
+    <span style="
+    display:inline-block;
+    width:12px;
+    height:12px;
+    background:#f0a34a;
+    border:1px solid #555;
+    "></span>
+    &nbsp;Level 2 — Amber / Alert<br>
+
+    <span style="
+    display:inline-block;
+    width:12px;
+    height:12px;
+    background:#d9534f;
+    border:1px solid #555;
+    "></span>
+    &nbsp;Level 3 — Red / Evacuation<br>
+
+    <span style="
+    display:inline-block;
+    width:12px;
+    height:12px;
+    background:#9e9e9e;
+    border:1px solid #555;
+    "></span>
+    &nbsp;Data stale / unavailable<br>
+
+    <hr style="margin:7px 0">
+
+    District colours represent hazard/warning context only.<br>
     National forecasts are not district-level forecasts.
+
     </div>
     """
     m.get_root().html.add_child(folium.Element(panel))

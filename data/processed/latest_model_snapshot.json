@@ -1,5 +1,5 @@
 {
-  "snapshot_datetime": "2026-09-30 10:00:00",
+  "snapshot_datetime": "2026-10-08 10:00:00",
   "forecast_definition": "Next eligible DMC Situation Report within a maximum 48-hour gap",
   "geographic_scope": "Sri Lanka - national",
   "reported_hazards": [
@@ -8,29 +8,29 @@
     "Heavy Rain",
     "Strong Wind"
   ],
-  "current_affected_people": 4110.0,
-  "predicted_next_affected_people": 4109.939873899037,
+  "current_affected_people": 5222.0,
+  "predicted_next_affected_people": 5221.939873899037,
   "predicted_change": -0.06012610096320755,
   "predicted_affected_change": -0.06012610096320755,
-  "prediction_interval_lower": 1779.8118068368608,
-  "prediction_interval_upper": 6313.063784220938,
-  "lower_90": 1779.8118068368608,
-  "upper_90": 6313.063784220938,
+  "prediction_interval_lower": 2072.8631345263593,
+  "prediction_interval_upper": 7789.909893093525,
+  "lower_90": 2072.8631345263593,
+  "upper_90": 7789.909893093525,
   "prediction_interval_90": {
-    "lower": 1779.8118068368608,
-    "upper": 6313.063784220938
+    "lower": 2072.8631345263593,
+    "upper": 7789.909893093525
   },
   "prediction_interval_label": "90% model-based prediction interval",
   "current_safety_population": 46.0,
-  "safety_use_probability": 0.8391365543257858,
+  "safety_use_probability": 0.9238181946283145,
   "safety_use_prediction": 1,
-  "predicted_next_safety_population": 46.46246879995441,
-  "experimental_escalation_risk": "Low",
+  "predicted_next_safety_population": 46.63510616818113,
+  "experimental_escalation_risk": "Moderate",
   "risk_probabilities": {
-    "Critical": 0.008497108814526418,
-    "High": 0.05502348388243406,
-    "Low": 0.8040688897027537,
-    "Moderate": 0.13241051760028585
+    "Critical": 0.13975126252177308,
+    "High": 0.05656028017149343,
+    "Low": 0.3561270256294843,
+    "Moderate": 0.4475614316772492
   },
   "hazard_flags": {
     "flood": 1,

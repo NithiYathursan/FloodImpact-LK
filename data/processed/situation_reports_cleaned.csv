@@ -4642,3 +4642,11 @@ affected_families,affected_people,deaths,disaster_types,enterprise_damage,extrac
 49736.0,164176.0,0.0,Other,0.0,grand_total,0.0,,situation_20260929_1000_e2a25057.pdf,0.0,True,,,0.0,0.0,0.0,0.0,,,,,,0.0,,2026-09-29 00:00:00,0.0,5625
 49796.0,164348.0,0.0,Other,0.0,grand_total,0.0,,situation_20260930_1000_4f4e3c38.pdf,0.0,True,,,0.0,0.0,0.0,0.0,,,,,,0.0,,2026-09-30 00:00:00,0.0,5774
 1120.0,4110.0,2.0,"Flood, Landslide, Heavy Rain, Strong Wind",1.0,grand_total,13.0,,situation_20260930_1000_d50409f5.pdf,4.0,True,,,3.0,8.0,1.0,550.0,,,,,,46.0,,2026-09-30 00:00:00,2.0,6125
+49796.0,164348.0,0.0,Other,0.0,grand_total,0.0,,situation_20261003_1000_4127007a.pdf,0.0,True,,,0.0,0.0,0.0,0.0,,,,,,0.0,,2026-10-03 00:00:00,0.0,5774
+1190.0,4363.0,4.0,"Flood, Landslide, Heavy Rain, Strong Wind",1.0,grand_total,13.0,,situation_20261003_1000_f4809568.pdf,4.0,True,,,4.0,8.0,1.0,613.0,,,,,,46.0,,2026-10-03 00:00:00,2.0,6336
+1190.0,4363.0,4.0,"Flood, Landslide, Heavy Rain, Strong Wind",1.0,grand_total,13.0,,situation_20261004_1000_394c894a.pdf,4.0,True,,,4.0,8.0,1.0,613.0,,,,,,46.0,,2026-10-04 00:00:00,2.0,6333
+49796.0,164348.0,0.0,Other,0.0,grand_total,0.0,,situation_20261004_1000_ccac5baf.pdf,0.0,True,,,0.0,0.0,0.0,0.0,,,,,,0.0,,2026-10-04 00:00:00,0.0,5771
+1190.0,4363.0,4.0,"Flood, Landslide, Heavy Rain, Strong Wind",1.0,grand_total,13.0,,situation_20261005_1000_2ace8fb3.pdf,4.0,True,,,4.0,8.0,1.0,613.0,,,,,,46.0,,2026-10-05 00:00:00,2.0,6347
+49796.0,164348.0,0.0,Other,0.0,grand_total,0.0,,situation_20261005_1000_907c0639.pdf,0.0,True,,,0.0,0.0,0.0,0.0,,,,,,0.0,,2026-10-05 00:00:00,0.0,5785
+1366.0,4934.0,6.0,"Flood, Landslide, Heavy Rain, Strong Wind",1.0,grand_total,13.0,,situation_20261006_1000_c8777957.pdf,4.0,True,,,4.0,8.0,1.0,763.0,,,,,,46.0,,2026-10-06 00:00:00,2.0,6360
+1446.0,5222.0,7.0,"Flood, Landslide, Heavy Rain, Strong Wind",1.0,grand_total,13.0,,situation_20261008_1000_6aba8913.pdf,4.0,True,,,4.0,12.0,1.0,811.0,,,,,,46.0,,2026-10-08 00:00:00,2.0,6364

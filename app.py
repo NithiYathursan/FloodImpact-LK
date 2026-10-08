@@ -1274,10 +1274,7 @@ def run_latest_update():
 
             text=True,
 
-            timeout=
-                30
-                *
-                60,
+            timeout=2*60*60
         )
 
         output = (
@@ -2166,24 +2163,46 @@ with st.sidebar:
             if update_ok:
 
                 st.success(
-                    "Latest official-data check completed."
+                    "Latest official-data check completed. "
+                    "The dashboard was updated to the latest valid snapshot."
                 )
 
                 st.rerun()
 
             else:
 
-                st.error(
-                    "Latest official-data check "
-                    "did not complete."
+                normalized_output = (
+                    update_output.casefold()
+                    if update_output
+                    else ""
                 )
 
-                if update_output:
+                no_new_general_report = (
+                    "no newer general situation report"
+                    in normalized_output
+                )
 
-                    st.code(
-                        update_output[-5000:],
-                        language="text",
-                    )
+                if no_new_general_report:
+
+                        st.info(
+                            "Official-data check completed. "
+                            "Supporting sources were refreshed, but no newer "
+                            "General DMC Situation Report is available. "
+                            "The previous valid prediction snapshot was preserved."
+                        )
+
+                else:
+
+                        st.error(
+                            "Latest official-data check failed."
+                        )
+
+                        if update_output:
+
+                            st.code(
+                                update_output[-5000:],
+                                language="text",
+                            )
 
     else:
 
@@ -3194,28 +3213,6 @@ elif page == "🌧️ Hazard Context":
             },
         ]
     )
-
-
-    # st.dataframe(
-
-    #     freshness_table,
-
-    #     hide_index=True,
-
-    #     use_container_width=True,
-    # )
-    # st.markdown(
-    # """
-    # <style>
-    # div[data-testid="stTable"] thead th {
-    #     font-weight: 800 !important;
-    # }
-    # </style>
-    # """,
-    # unsafe_allow_html=True,
-    # )
-
-    # st.table(freshness_table)
     st.markdown(
     """
     <style>
@@ -3437,19 +3434,13 @@ elif page == "🗺️ District Map":
 
             if district_options:
 
-                default_index = (
-                    district_options.index("MONARAGALA")
-                    if "MONARAGALA" in district_options
-                    else 0
-                )
-
                 selected_district = st.selectbox(
                     "Select district",
                     district_options,
-                    index=default_index,
+                    index=None,
+                    placeholder="Choose a district",
                     key="gn_selected_district",
                 )
-
                 st.caption(
                     "Strong GN-level highlighting is used only "
                     "when a GN is explicitly named in an available "
@@ -3458,29 +3449,31 @@ elif page == "🗺️ District Map":
                     "parent DSD, but remain DSD-level information."
                 )
 
-                try:
+                if selected_district:
 
-                    with st.spinner(
-                        "Building GN hazard-context map..."
-                    ):
+                    try:
 
-                        gn_map_html = cached_gn_map(
-                            selected_district,
-                            str(snapshot),
+                        with st.spinner(
+                            "Building GN hazard-context map..."
+                        ):
+
+                            gn_map_html = cached_gn_map(
+                                selected_district,
+                                str(snapshot),
+                            )
+
+                        components.html(
+                            gn_map_html,
+                            height=720,
+                            scrolling=True,
                         )
 
-                    components.html(
-                        gn_map_html,
-                        height=720,
-                        scrolling=True,
-                    )
+                    except Exception as exc:
 
-                except Exception as exc:
-
-                    st.error(
-                        "GN map could not be generated: "
-                        f"{exc}"
-                    )
+                        st.error(
+                            "GN map could not be generated: "
+                            f"{exc}"
+                        )
 
                 warning(
                     "<b>GN map interpretation:</b> "
@@ -4207,10 +4200,8 @@ elif page == "📈 Trend & Anomalies":
         audience,
     )
 
-
-# =========================================================
 # SIMILAR EVENTS
-# =========================================================
+
 
 elif page == "🕰️ Similar Events":
 
